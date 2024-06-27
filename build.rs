@@ -17,7 +17,14 @@ fn main() {
         .status()
         .expect("could not execute make");
 
-    assert!(status.success(), "make failed");
+    assert!(status.success(), "make libdxp failed");
+
+    let status = process::Command::new("make")
+        .current_dir(&libbpf_dir)
+        .status()
+        .expect("could not execute make");
+
+    assert!(status.success(), "make libbpf failed");
 
     println!("cargo:rustc-link-search={}", libbpf_dir.display());
     println!("cargo:rustc-link-search={}", libxdp_dir.display());
