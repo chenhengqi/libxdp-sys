@@ -136,6 +136,7 @@ pub const __USE_ATFILE: u32 = 1;
 pub const __USE_FORTIFY_LEVEL: u32 = 0;
 pub const __GLIBC_USE_DEPRECATED_GETS: u32 = 0;
 pub const __GLIBC_USE_DEPRECATED_SCANF: u32 = 0;
+pub const __GLIBC_USE_C2X_STRTOL: u32 = 0;
 pub const _STDC_PREDEF_H: u32 = 1;
 pub const __STDC_IEC_559__: u32 = 1;
 pub const __STDC_IEC_60559_BFP__: u32 = 201404;
@@ -144,7 +145,7 @@ pub const __STDC_IEC_60559_COMPLEX__: u32 = 201404;
 pub const __STDC_ISO_10646__: u32 = 201706;
 pub const __GNU_LIBRARY__: u32 = 6;
 pub const __GLIBC__: u32 = 2;
-pub const __GLIBC_MINOR__: u32 = 35;
+pub const __GLIBC_MINOR__: u32 = 39;
 pub const _SYS_CDEFS_H: u32 = 1;
 pub const __glibc_c99_flexarr_available: u32 = 1;
 pub const __LDOUBLE_REDIRECTS_TO_FLOAT128_ABI: u32 = 0;
@@ -156,7 +157,6 @@ pub const __GLIBC_USE_IEC_60559_EXT: u32 = 0;
 pub const __GLIBC_USE_IEC_60559_FUNCS_EXT: u32 = 0;
 pub const __GLIBC_USE_IEC_60559_FUNCS_EXT_C2X: u32 = 0;
 pub const __GLIBC_USE_IEC_60559_TYPES_EXT: u32 = 0;
-pub const __GNUC_VA_LIST: u32 = 1;
 pub const _BITS_TYPES_H: u32 = 1;
 pub const _BITS_TYPESIZES_H: u32 = 1;
 pub const __OFF_T_MATCHES_OFF64_T: u32 = 1;
@@ -175,6 +175,7 @@ pub const __struct_FILE_defined: u32 = 1;
 pub const _IO_EOF_SEEN: u32 = 16;
 pub const _IO_ERR_SEEN: u32 = 32;
 pub const _IO_USER_LOCK: u32 = 32768;
+pub const __cookie_io_functions_t_defined: u32 = 1;
 pub const _IOFBF: u32 = 0;
 pub const _IOLBF: u32 = 1;
 pub const _IONBF: u32 = 2;
@@ -184,9 +185,9 @@ pub const SEEK_SET: u32 = 0;
 pub const SEEK_CUR: u32 = 1;
 pub const SEEK_END: u32 = 2;
 pub const P_tmpdir: &[u8; 5] = b"/tmp\0";
-pub const _BITS_STDIO_LIM_H: u32 = 1;
 pub const L_tmpnam: u32 = 20;
 pub const TMP_MAX: u32 = 238328;
+pub const _BITS_STDIO_LIM_H: u32 = 1;
 pub const FILENAME_MAX: u32 = 4096;
 pub const L_ctermid: u32 = 9;
 pub const FOPEN_MAX: u32 = 16;
@@ -207,6 +208,7 @@ pub const __HAVE_DISTINCT_FLOAT64X: u32 = 0;
 pub const __HAVE_DISTINCT_FLOAT128X: u32 = 0;
 pub const __HAVE_FLOATN_NOT_TYPEDEF: u32 = 0;
 pub const __BITS_PER_LONG: u32 = 64;
+pub const __BITS_PER_LONG_LONG: u32 = 64;
 pub const BPF_LD: u32 = 0;
 pub const BPF_LDX: u32 = 1;
 pub const BPF_ST: u32 = 2;
@@ -246,6 +248,7 @@ pub const BPF_MAXINSNS: u32 = 4096;
 pub const BPF_JMP32: u32 = 6;
 pub const BPF_ALU64: u32 = 7;
 pub const BPF_DW: u32 = 24;
+pub const BPF_MEMSX: u32 = 128;
 pub const BPF_ATOMIC: u32 = 192;
 pub const BPF_XADD: u32 = 192;
 pub const BPF_MOV: u32 = 176;
@@ -262,6 +265,7 @@ pub const BPF_JSGT: u32 = 96;
 pub const BPF_JSGE: u32 = 112;
 pub const BPF_JSLT: u32 = 192;
 pub const BPF_JSLE: u32 = 208;
+pub const BPF_JCOND: u32 = 224;
 pub const BPF_CALL: u32 = 128;
 pub const BPF_EXIT: u32 = 144;
 pub const BPF_FETCH: u32 = 1;
@@ -270,11 +274,18 @@ pub const BPF_CMPXCHG: u32 = 241;
 pub const BPF_F_ALLOW_OVERRIDE: u32 = 1;
 pub const BPF_F_ALLOW_MULTI: u32 = 2;
 pub const BPF_F_REPLACE: u32 = 4;
+pub const BPF_F_BEFORE: u32 = 8;
+pub const BPF_F_AFTER: u32 = 16;
+pub const BPF_F_ID: u32 = 32;
 pub const BPF_F_STRICT_ALIGNMENT: u32 = 1;
 pub const BPF_F_ANY_ALIGNMENT: u32 = 2;
 pub const BPF_F_TEST_RND_HI32: u32 = 4;
 pub const BPF_F_TEST_STATE_FREQ: u32 = 8;
 pub const BPF_F_SLEEPABLE: u32 = 16;
+pub const BPF_F_XDP_HAS_FRAGS: u32 = 32;
+pub const BPF_F_XDP_DEV_BOUND_ONLY: u32 = 64;
+pub const BPF_F_TEST_REG_INVARIANTS: u32 = 128;
+pub const BPF_F_NETFILTER_IP_DEFRAG: u32 = 1;
 pub const BPF_PSEUDO_MAP_FD: u32 = 1;
 pub const BPF_PSEUDO_MAP_IDX: u32 = 5;
 pub const BPF_PSEUDO_MAP_VALUE: u32 = 2;
@@ -285,6 +296,7 @@ pub const BPF_PSEUDO_CALL: u32 = 1;
 pub const BPF_PSEUDO_KFUNC_CALL: u32 = 2;
 pub const BPF_F_QUERY_EFFECTIVE: u32 = 1;
 pub const BPF_F_TEST_RUN_ON_CPU: u32 = 1;
+pub const BPF_F_TEST_XDP_LIVE_FRAMES: u32 = 2;
 pub const BPF_BUILD_ID_SIZE: u32 = 20;
 pub const BPF_OBJ_NAME_LEN: u32 = 16;
 pub const XDP_PACKET_HEADROOM: u32 = 256;
@@ -293,6 +305,7 @@ pub const _STDINT_H: u32 = 1;
 pub const _BITS_WCHAR_H: u32 = 1;
 pub const _BITS_STDINT_INTN_H: u32 = 1;
 pub const _BITS_STDINT_UINTN_H: u32 = 1;
+pub const _BITS_STDINT_LEAST_H: u32 = 1;
 pub const INT8_MIN: i32 = -128;
 pub const INT16_MIN: i32 = -32768;
 pub const INT32_MIN: i32 = -2147483648;
@@ -330,9 +343,9 @@ pub const SIG_ATOMIC_MAX: u32 = 2147483647;
 pub const SIZE_MAX: i32 = -1;
 pub const WINT_MIN: u32 = 0;
 pub const WINT_MAX: u32 = 4294967295;
+pub const __bool_true_false_are_defined: u32 = 1;
 pub const true_: u32 = 1;
 pub const false_: u32 = 0;
-pub const __bool_true_false_are_defined: u32 = 1;
 pub const _SYS_TYPES_H: u32 = 1;
 pub const __clock_t_defined: u32 = 1;
 pub const __clockid_t_defined: u32 = 1;
@@ -394,7 +407,9 @@ pub const XDP_SHARED_UMEM: u32 = 1;
 pub const XDP_COPY: u32 = 2;
 pub const XDP_ZEROCOPY: u32 = 4;
 pub const XDP_USE_NEED_WAKEUP: u32 = 8;
+pub const XDP_USE_SG: u32 = 16;
 pub const XDP_UMEM_UNALIGNED_CHUNK_FLAG: u32 = 1;
+pub const XDP_UMEM_TX_SW_CSUM: u32 = 2;
 pub const XDP_RING_NEED_WAKEUP: u32 = 1;
 pub const XDP_MMAP_OFFSETS: u32 = 1;
 pub const XDP_RX_RING: u32 = 2;
@@ -411,6 +426,10 @@ pub const XDP_UMEM_PGOFF_FILL_RING: u64 = 4294967296;
 pub const XDP_UMEM_PGOFF_COMPLETION_RING: u64 = 6442450944;
 pub const XSK_UNALIGNED_BUF_OFFSET_SHIFT: u32 = 48;
 pub const XSK_UNALIGNED_BUF_ADDR_MASK: u64 = 281474976710655;
+pub const XDP_TXMD_FLAGS_TIMESTAMP: u32 = 1;
+pub const XDP_TXMD_FLAGS_CHECKSUM: u32 = 2;
+pub const XDP_PKT_CONTD: u32 = 1;
+pub const XDP_TX_METADATA: u32 = 2;
 pub const XSK_RING_CONS__DEFAULT_NUM_DESCS: u32 = 2048;
 pub const XSK_RING_PROD__DEFAULT_NUM_DESCS: u32 = 2048;
 pub const XSK_UMEM__DEFAULT_FRAME_SHIFT: u32 = 12;
@@ -419,7 +438,6 @@ pub const XSK_UMEM__DEFAULT_FRAME_HEADROOM: u32 = 0;
 pub const XSK_UMEM__DEFAULT_FLAGS: u32 = 0;
 pub const XSK_LIBBPF_FLAGS__INHIBIT_PROG_LOAD: u32 = 1;
 pub const XSK_LIBXDP_FLAGS__INHIBIT_PROG_LOAD: u32 = 1;
-pub type va_list = __builtin_va_list;
 pub type __gnuc_va_list = __builtin_va_list;
 pub type __u_char = ::std::os::raw::c_uchar;
 pub type __u_short = ::std::os::raw::c_ushort;
@@ -1036,6 +1054,96 @@ fn bindgen_test_layout__IO_FILE() {
         )
     );
 }
+pub type cookie_read_function_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        __cookie: *mut ::std::os::raw::c_void,
+        __buf: *mut ::std::os::raw::c_char,
+        __nbytes: usize,
+    ) -> __ssize_t,
+>;
+pub type cookie_write_function_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        __cookie: *mut ::std::os::raw::c_void,
+        __buf: *const ::std::os::raw::c_char,
+        __nbytes: usize,
+    ) -> __ssize_t,
+>;
+pub type cookie_seek_function_t = ::std::option::Option<
+    unsafe extern "C" fn(
+        __cookie: *mut ::std::os::raw::c_void,
+        __pos: *mut __off64_t,
+        __w: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int,
+>;
+pub type cookie_close_function_t = ::std::option::Option<
+    unsafe extern "C" fn(__cookie: *mut ::std::os::raw::c_void) -> ::std::os::raw::c_int,
+>;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct _IO_cookie_io_functions_t {
+    pub read: cookie_read_function_t,
+    pub write: cookie_write_function_t,
+    pub seek: cookie_seek_function_t,
+    pub close: cookie_close_function_t,
+}
+#[test]
+fn bindgen_test_layout__IO_cookie_io_functions_t() {
+    const UNINIT: ::std::mem::MaybeUninit<_IO_cookie_io_functions_t> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<_IO_cookie_io_functions_t>(),
+        32usize,
+        concat!("Size of: ", stringify!(_IO_cookie_io_functions_t))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<_IO_cookie_io_functions_t>(),
+        8usize,
+        concat!("Alignment of ", stringify!(_IO_cookie_io_functions_t))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).read) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_IO_cookie_io_functions_t),
+            "::",
+            stringify!(read)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).write) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_IO_cookie_io_functions_t),
+            "::",
+            stringify!(write)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).seek) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_IO_cookie_io_functions_t),
+            "::",
+            stringify!(seek)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).close) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(_IO_cookie_io_functions_t),
+            "::",
+            stringify!(close)
+        )
+    );
+}
+pub type cookie_io_functions_t = _IO_cookie_io_functions_t;
+pub type va_list = __gnuc_va_list;
 pub type off_t = __off_t;
 pub type fpos_t = __fpos_t;
 extern "C" {
@@ -1104,6 +1212,13 @@ extern "C" {
 extern "C" {
     pub fn fdopen(__fd: ::std::os::raw::c_int, __modes: *const ::std::os::raw::c_char)
         -> *mut FILE;
+}
+extern "C" {
+    pub fn fopencookie(
+        __magic_cookie: *mut ::std::os::raw::c_void,
+        __modes: *const ::std::os::raw::c_char,
+        __io_funcs: cookie_io_functions_t,
+    ) -> *mut FILE;
 }
 extern "C" {
     pub fn fmemopen(
@@ -1186,6 +1301,27 @@ extern "C" {
         __maxlen: ::std::os::raw::c_ulong,
         __format: *const ::std::os::raw::c_char,
         __arg: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn vasprintf(
+        __ptr: *mut *mut ::std::os::raw::c_char,
+        __f: *const ::std::os::raw::c_char,
+        __arg: *mut __va_list_tag,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn __asprintf(
+        __ptr: *mut *mut ::std::os::raw::c_char,
+        __fmt: *const ::std::os::raw::c_char,
+        ...
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn asprintf(
+        __ptr: *mut *mut ::std::os::raw::c_char,
+        __fmt: *const ::std::os::raw::c_char,
+        ...
     ) -> ::std::os::raw::c_int;
 }
 extern "C" {
@@ -1584,6 +1720,8 @@ pub type __kernel_clockid_t = ::std::os::raw::c_int;
 pub type __kernel_caddr_t = *mut ::std::os::raw::c_char;
 pub type __kernel_uid16_t = ::std::os::raw::c_ushort;
 pub type __kernel_gid16_t = ::std::os::raw::c_ushort;
+pub type __s128 = i128;
+pub type __u128 = u128;
 pub type __le16 = __u16;
 pub type __be16 = __u16;
 pub type __le32 = __u32;
@@ -1593,6 +1731,8 @@ pub type __be64 = __u64;
 pub type __sum16 = __u16;
 pub type __wsum = __u32;
 pub type __poll_t = ::std::os::raw::c_uint;
+pub const bpf_cond_pseudo_jmp_BPF_MAY_GOTO: bpf_cond_pseudo_jmp = 0;
+pub type bpf_cond_pseudo_jmp = ::std::os::raw::c_uint;
 pub const BPF_REG_0: _bindgen_ty_1 = 0;
 pub const BPF_REG_1: _bindgen_ty_1 = 1;
 pub const BPF_REG_2: _bindgen_ty_1 = 2;
@@ -1740,6 +1880,111 @@ fn bindgen_test_layout_bpf_lpm_trie_key() {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
+pub struct bpf_lpm_trie_key_hdr {
+    pub prefixlen: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_lpm_trie_key_hdr() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_lpm_trie_key_hdr> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_lpm_trie_key_hdr>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_lpm_trie_key_hdr))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_lpm_trie_key_hdr>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_lpm_trie_key_hdr))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).prefixlen) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_lpm_trie_key_hdr),
+            "::",
+            stringify!(prefixlen)
+        )
+    );
+}
+#[repr(C)]
+pub struct bpf_lpm_trie_key_u8 {
+    pub __bindgen_anon_1: bpf_lpm_trie_key_u8__bindgen_ty_1,
+    pub data: __IncompleteArrayField<__u8>,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_lpm_trie_key_u8__bindgen_ty_1 {
+    pub hdr: bpf_lpm_trie_key_hdr,
+    pub prefixlen: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_lpm_trie_key_u8__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_lpm_trie_key_u8__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_lpm_trie_key_u8__bindgen_ty_1>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_lpm_trie_key_u8__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_lpm_trie_key_u8__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_lpm_trie_key_u8__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hdr) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_lpm_trie_key_u8__bindgen_ty_1),
+            "::",
+            stringify!(hdr)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).prefixlen) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_lpm_trie_key_u8__bindgen_ty_1),
+            "::",
+            stringify!(prefixlen)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_lpm_trie_key_u8() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_lpm_trie_key_u8> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_lpm_trie_key_u8>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_lpm_trie_key_u8))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_lpm_trie_key_u8>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_lpm_trie_key_u8))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).data) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_lpm_trie_key_u8),
+            "::",
+            stringify!(data)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
 pub struct bpf_cgroup_storage_key {
     pub cgroup_inode_id: __u64,
     pub attach_type: __u32,
@@ -1780,10 +2025,18 @@ fn bindgen_test_layout_bpf_cgroup_storage_key() {
         )
     );
 }
+pub const bpf_cgroup_iter_order_BPF_CGROUP_ITER_ORDER_UNSPEC: bpf_cgroup_iter_order = 0;
+pub const bpf_cgroup_iter_order_BPF_CGROUP_ITER_SELF_ONLY: bpf_cgroup_iter_order = 1;
+pub const bpf_cgroup_iter_order_BPF_CGROUP_ITER_DESCENDANTS_PRE: bpf_cgroup_iter_order = 2;
+pub const bpf_cgroup_iter_order_BPF_CGROUP_ITER_DESCENDANTS_POST: bpf_cgroup_iter_order = 3;
+pub const bpf_cgroup_iter_order_BPF_CGROUP_ITER_ANCESTORS_UP: bpf_cgroup_iter_order = 4;
+pub type bpf_cgroup_iter_order = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union bpf_iter_link_info {
     pub map: bpf_iter_link_info__bindgen_ty_1,
+    pub cgroup: bpf_iter_link_info__bindgen_ty_2,
+    pub task: bpf_iter_link_info__bindgen_ty_3,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1819,18 +2072,130 @@ fn bindgen_test_layout_bpf_iter_link_info__bindgen_ty_1() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_iter_link_info__bindgen_ty_2 {
+    pub order: bpf_cgroup_iter_order,
+    pub cgroup_fd: __u32,
+    pub cgroup_id: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_iter_link_info__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_iter_link_info__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_iter_link_info__bindgen_ty_2>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_iter_link_info__bindgen_ty_2))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_iter_link_info__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_iter_link_info__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).order) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info__bindgen_ty_2),
+            "::",
+            stringify!(order)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cgroup_fd) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info__bindgen_ty_2),
+            "::",
+            stringify!(cgroup_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cgroup_id) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info__bindgen_ty_2),
+            "::",
+            stringify!(cgroup_id)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_iter_link_info__bindgen_ty_3 {
+    pub tid: __u32,
+    pub pid: __u32,
+    pub pid_fd: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_iter_link_info__bindgen_ty_3() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_iter_link_info__bindgen_ty_3> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_iter_link_info__bindgen_ty_3>(),
+        12usize,
+        concat!("Size of: ", stringify!(bpf_iter_link_info__bindgen_ty_3))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_iter_link_info__bindgen_ty_3>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_iter_link_info__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tid) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info__bindgen_ty_3),
+            "::",
+            stringify!(tid)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pid) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info__bindgen_ty_3),
+            "::",
+            stringify!(pid)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pid_fd) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info__bindgen_ty_3),
+            "::",
+            stringify!(pid_fd)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_iter_link_info() {
     const UNINIT: ::std::mem::MaybeUninit<bpf_iter_link_info> = ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_iter_link_info>(),
-        4usize,
+        16usize,
         concat!("Size of: ", stringify!(bpf_iter_link_info))
     );
     assert_eq!(
         ::std::mem::align_of::<bpf_iter_link_info>(),
-        4usize,
+        8usize,
         concat!("Alignment of ", stringify!(bpf_iter_link_info))
     );
     assert_eq!(
@@ -1841,6 +2206,26 @@ fn bindgen_test_layout_bpf_iter_link_info() {
             stringify!(bpf_iter_link_info),
             "::",
             stringify!(map)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cgroup) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info),
+            "::",
+            stringify!(cgroup)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).task) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_link_info),
+            "::",
+            stringify!(task)
         )
     );
 }
@@ -1881,6 +2266,8 @@ pub const bpf_cmd_BPF_ENABLE_STATS: bpf_cmd = 32;
 pub const bpf_cmd_BPF_ITER_CREATE: bpf_cmd = 33;
 pub const bpf_cmd_BPF_LINK_DETACH: bpf_cmd = 34;
 pub const bpf_cmd_BPF_PROG_BIND_MAP: bpf_cmd = 35;
+pub const bpf_cmd_BPF_TOKEN_CREATE: bpf_cmd = 36;
+pub const bpf_cmd___MAX_BPF_CMD: bpf_cmd = 37;
 pub type bpf_cmd = ::std::os::raw::c_uint;
 pub const bpf_map_type_BPF_MAP_TYPE_UNSPEC: bpf_map_type = 0;
 pub const bpf_map_type_BPF_MAP_TYPE_HASH: bpf_map_type = 1;
@@ -1901,8 +2288,10 @@ pub const bpf_map_type_BPF_MAP_TYPE_SOCKMAP: bpf_map_type = 15;
 pub const bpf_map_type_BPF_MAP_TYPE_CPUMAP: bpf_map_type = 16;
 pub const bpf_map_type_BPF_MAP_TYPE_XSKMAP: bpf_map_type = 17;
 pub const bpf_map_type_BPF_MAP_TYPE_SOCKHASH: bpf_map_type = 18;
+pub const bpf_map_type_BPF_MAP_TYPE_CGROUP_STORAGE_DEPRECATED: bpf_map_type = 19;
 pub const bpf_map_type_BPF_MAP_TYPE_CGROUP_STORAGE: bpf_map_type = 19;
 pub const bpf_map_type_BPF_MAP_TYPE_REUSEPORT_SOCKARRAY: bpf_map_type = 20;
+pub const bpf_map_type_BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE_DEPRECATED: bpf_map_type = 21;
 pub const bpf_map_type_BPF_MAP_TYPE_PERCPU_CGROUP_STORAGE: bpf_map_type = 21;
 pub const bpf_map_type_BPF_MAP_TYPE_QUEUE: bpf_map_type = 22;
 pub const bpf_map_type_BPF_MAP_TYPE_STACK: bpf_map_type = 23;
@@ -1912,6 +2301,11 @@ pub const bpf_map_type_BPF_MAP_TYPE_STRUCT_OPS: bpf_map_type = 26;
 pub const bpf_map_type_BPF_MAP_TYPE_RINGBUF: bpf_map_type = 27;
 pub const bpf_map_type_BPF_MAP_TYPE_INODE_STORAGE: bpf_map_type = 28;
 pub const bpf_map_type_BPF_MAP_TYPE_TASK_STORAGE: bpf_map_type = 29;
+pub const bpf_map_type_BPF_MAP_TYPE_BLOOM_FILTER: bpf_map_type = 30;
+pub const bpf_map_type_BPF_MAP_TYPE_USER_RINGBUF: bpf_map_type = 31;
+pub const bpf_map_type_BPF_MAP_TYPE_CGRP_STORAGE: bpf_map_type = 32;
+pub const bpf_map_type_BPF_MAP_TYPE_ARENA: bpf_map_type = 33;
+pub const bpf_map_type___MAX_BPF_MAP_TYPE: bpf_map_type = 34;
 pub type bpf_map_type = ::std::os::raw::c_uint;
 pub const bpf_prog_type_BPF_PROG_TYPE_UNSPEC: bpf_prog_type = 0;
 pub const bpf_prog_type_BPF_PROG_TYPE_SOCKET_FILTER: bpf_prog_type = 1;
@@ -1945,6 +2339,8 @@ pub const bpf_prog_type_BPF_PROG_TYPE_EXT: bpf_prog_type = 28;
 pub const bpf_prog_type_BPF_PROG_TYPE_LSM: bpf_prog_type = 29;
 pub const bpf_prog_type_BPF_PROG_TYPE_SK_LOOKUP: bpf_prog_type = 30;
 pub const bpf_prog_type_BPF_PROG_TYPE_SYSCALL: bpf_prog_type = 31;
+pub const bpf_prog_type_BPF_PROG_TYPE_NETFILTER: bpf_prog_type = 32;
+pub const bpf_prog_type___MAX_BPF_PROG_TYPE: bpf_prog_type = 33;
 pub type bpf_prog_type = ::std::os::raw::c_uint;
 pub const bpf_attach_type_BPF_CGROUP_INET_INGRESS: bpf_attach_type = 0;
 pub const bpf_attach_type_BPF_CGROUP_INET_EGRESS: bpf_attach_type = 1;
@@ -1988,7 +2384,21 @@ pub const bpf_attach_type_BPF_SK_SKB_VERDICT: bpf_attach_type = 38;
 pub const bpf_attach_type_BPF_SK_REUSEPORT_SELECT: bpf_attach_type = 39;
 pub const bpf_attach_type_BPF_SK_REUSEPORT_SELECT_OR_MIGRATE: bpf_attach_type = 40;
 pub const bpf_attach_type_BPF_PERF_EVENT: bpf_attach_type = 41;
-pub const bpf_attach_type___MAX_BPF_ATTACH_TYPE: bpf_attach_type = 42;
+pub const bpf_attach_type_BPF_TRACE_KPROBE_MULTI: bpf_attach_type = 42;
+pub const bpf_attach_type_BPF_LSM_CGROUP: bpf_attach_type = 43;
+pub const bpf_attach_type_BPF_STRUCT_OPS: bpf_attach_type = 44;
+pub const bpf_attach_type_BPF_NETFILTER: bpf_attach_type = 45;
+pub const bpf_attach_type_BPF_TCX_INGRESS: bpf_attach_type = 46;
+pub const bpf_attach_type_BPF_TCX_EGRESS: bpf_attach_type = 47;
+pub const bpf_attach_type_BPF_TRACE_UPROBE_MULTI: bpf_attach_type = 48;
+pub const bpf_attach_type_BPF_CGROUP_UNIX_CONNECT: bpf_attach_type = 49;
+pub const bpf_attach_type_BPF_CGROUP_UNIX_SENDMSG: bpf_attach_type = 50;
+pub const bpf_attach_type_BPF_CGROUP_UNIX_RECVMSG: bpf_attach_type = 51;
+pub const bpf_attach_type_BPF_CGROUP_UNIX_GETPEERNAME: bpf_attach_type = 52;
+pub const bpf_attach_type_BPF_CGROUP_UNIX_GETSOCKNAME: bpf_attach_type = 53;
+pub const bpf_attach_type_BPF_NETKIT_PRIMARY: bpf_attach_type = 54;
+pub const bpf_attach_type_BPF_NETKIT_PEER: bpf_attach_type = 55;
+pub const bpf_attach_type___MAX_BPF_ATTACH_TYPE: bpf_attach_type = 56;
 pub type bpf_attach_type = ::std::os::raw::c_uint;
 pub const bpf_link_type_BPF_LINK_TYPE_UNSPEC: bpf_link_type = 0;
 pub const bpf_link_type_BPF_LINK_TYPE_RAW_TRACEPOINT: bpf_link_type = 1;
@@ -1998,27 +2408,53 @@ pub const bpf_link_type_BPF_LINK_TYPE_ITER: bpf_link_type = 4;
 pub const bpf_link_type_BPF_LINK_TYPE_NETNS: bpf_link_type = 5;
 pub const bpf_link_type_BPF_LINK_TYPE_XDP: bpf_link_type = 6;
 pub const bpf_link_type_BPF_LINK_TYPE_PERF_EVENT: bpf_link_type = 7;
-pub const bpf_link_type_MAX_BPF_LINK_TYPE: bpf_link_type = 8;
+pub const bpf_link_type_BPF_LINK_TYPE_KPROBE_MULTI: bpf_link_type = 8;
+pub const bpf_link_type_BPF_LINK_TYPE_STRUCT_OPS: bpf_link_type = 9;
+pub const bpf_link_type_BPF_LINK_TYPE_NETFILTER: bpf_link_type = 10;
+pub const bpf_link_type_BPF_LINK_TYPE_TCX: bpf_link_type = 11;
+pub const bpf_link_type_BPF_LINK_TYPE_UPROBE_MULTI: bpf_link_type = 12;
+pub const bpf_link_type_BPF_LINK_TYPE_NETKIT: bpf_link_type = 13;
+pub const bpf_link_type___MAX_BPF_LINK_TYPE: bpf_link_type = 14;
 pub type bpf_link_type = ::std::os::raw::c_uint;
-pub const BPF_ANY: _bindgen_ty_2 = 0;
-pub const BPF_NOEXIST: _bindgen_ty_2 = 1;
-pub const BPF_EXIST: _bindgen_ty_2 = 2;
-pub const BPF_F_LOCK: _bindgen_ty_2 = 4;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_UNSPEC: bpf_perf_event_type = 0;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_UPROBE: bpf_perf_event_type = 1;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_URETPROBE: bpf_perf_event_type = 2;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_KPROBE: bpf_perf_event_type = 3;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_KRETPROBE: bpf_perf_event_type = 4;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_TRACEPOINT: bpf_perf_event_type = 5;
+pub const bpf_perf_event_type_BPF_PERF_EVENT_EVENT: bpf_perf_event_type = 6;
+pub type bpf_perf_event_type = ::std::os::raw::c_uint;
+pub const BPF_F_KPROBE_MULTI_RETURN: _bindgen_ty_2 = 1;
 pub type _bindgen_ty_2 = ::std::os::raw::c_uint;
-pub const BPF_F_NO_PREALLOC: _bindgen_ty_3 = 1;
-pub const BPF_F_NO_COMMON_LRU: _bindgen_ty_3 = 2;
-pub const BPF_F_NUMA_NODE: _bindgen_ty_3 = 4;
-pub const BPF_F_RDONLY: _bindgen_ty_3 = 8;
-pub const BPF_F_WRONLY: _bindgen_ty_3 = 16;
-pub const BPF_F_STACK_BUILD_ID: _bindgen_ty_3 = 32;
-pub const BPF_F_ZERO_SEED: _bindgen_ty_3 = 64;
-pub const BPF_F_RDONLY_PROG: _bindgen_ty_3 = 128;
-pub const BPF_F_WRONLY_PROG: _bindgen_ty_3 = 256;
-pub const BPF_F_CLONE: _bindgen_ty_3 = 512;
-pub const BPF_F_MMAPABLE: _bindgen_ty_3 = 1024;
-pub const BPF_F_PRESERVE_ELEMS: _bindgen_ty_3 = 2048;
-pub const BPF_F_INNER_MAP: _bindgen_ty_3 = 4096;
+pub const BPF_F_UPROBE_MULTI_RETURN: _bindgen_ty_3 = 1;
 pub type _bindgen_ty_3 = ::std::os::raw::c_uint;
+pub const bpf_addr_space_cast_BPF_ADDR_SPACE_CAST: bpf_addr_space_cast = 1;
+pub type bpf_addr_space_cast = ::std::os::raw::c_uint;
+pub const BPF_ANY: _bindgen_ty_4 = 0;
+pub const BPF_NOEXIST: _bindgen_ty_4 = 1;
+pub const BPF_EXIST: _bindgen_ty_4 = 2;
+pub const BPF_F_LOCK: _bindgen_ty_4 = 4;
+pub type _bindgen_ty_4 = ::std::os::raw::c_uint;
+pub const BPF_F_NO_PREALLOC: _bindgen_ty_5 = 1;
+pub const BPF_F_NO_COMMON_LRU: _bindgen_ty_5 = 2;
+pub const BPF_F_NUMA_NODE: _bindgen_ty_5 = 4;
+pub const BPF_F_RDONLY: _bindgen_ty_5 = 8;
+pub const BPF_F_WRONLY: _bindgen_ty_5 = 16;
+pub const BPF_F_STACK_BUILD_ID: _bindgen_ty_5 = 32;
+pub const BPF_F_ZERO_SEED: _bindgen_ty_5 = 64;
+pub const BPF_F_RDONLY_PROG: _bindgen_ty_5 = 128;
+pub const BPF_F_WRONLY_PROG: _bindgen_ty_5 = 256;
+pub const BPF_F_CLONE: _bindgen_ty_5 = 512;
+pub const BPF_F_MMAPABLE: _bindgen_ty_5 = 1024;
+pub const BPF_F_PRESERVE_ELEMS: _bindgen_ty_5 = 2048;
+pub const BPF_F_INNER_MAP: _bindgen_ty_5 = 4096;
+pub const BPF_F_LINK: _bindgen_ty_5 = 8192;
+pub const BPF_F_PATH_FD: _bindgen_ty_5 = 16384;
+pub const BPF_F_VTYPE_BTF_OBJ_FD: _bindgen_ty_5 = 32768;
+pub const BPF_F_TOKEN_FD: _bindgen_ty_5 = 65536;
+pub const BPF_F_SEGV_ON_FAULT: _bindgen_ty_5 = 131072;
+pub const BPF_F_NO_USER_CONV: _bindgen_ty_5 = 262144;
+pub type _bindgen_ty_5 = ::std::os::raw::c_uint;
 pub const bpf_stats_type_BPF_STATS_RUN_TIME: bpf_stats_type = 0;
 pub type bpf_stats_type = ::std::os::raw::c_uint;
 pub const bpf_stack_build_id_status_BPF_STACK_BUILD_ID_EMPTY: bpf_stack_build_id_status = 0;
@@ -2134,6 +2570,7 @@ pub union bpf_attr {
     pub enable_stats: bpf_attr__bindgen_ty_17,
     pub iter_create: bpf_attr__bindgen_ty_18,
     pub prog_bind_map: bpf_attr__bindgen_ty_19,
+    pub token_create: bpf_attr__bindgen_ty_20,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2151,6 +2588,9 @@ pub struct bpf_attr__bindgen_ty_1 {
     pub btf_key_type_id: __u32,
     pub btf_value_type_id: __u32,
     pub btf_vmlinux_value_type_id: __u32,
+    pub map_extra: __u64,
+    pub value_type_btf_obj_fd: __s32,
+    pub map_token_fd: __s32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_1() {
@@ -2159,12 +2599,12 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_1() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_1>(),
-        64usize,
+        80usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_1))
     );
     assert_eq!(
         ::std::mem::align_of::<bpf_attr__bindgen_ty_1>(),
-        4usize,
+        8usize,
         concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_1))
     );
     assert_eq!(
@@ -2295,6 +2735,36 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_1() {
             stringify!(bpf_attr__bindgen_ty_1),
             "::",
             stringify!(btf_vmlinux_value_type_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).map_extra) as usize - ptr as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(map_extra)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).value_type_btf_obj_fd) as usize - ptr as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(value_type_btf_obj_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).map_token_fd) as usize - ptr as usize },
+        76usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_1),
+            "::",
+            stringify!(map_token_fd)
         )
     );
 }
@@ -2532,9 +3002,12 @@ pub struct bpf_attr__bindgen_ty_4 {
     pub line_info_cnt: __u32,
     pub attach_btf_id: __u32,
     pub __bindgen_anon_1: bpf_attr__bindgen_ty_4__bindgen_ty_1,
-    pub _bitfield_align_1: [u8; 0],
-    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub core_relo_cnt: __u32,
     pub fd_array: __u64,
+    pub core_relos: __u64,
+    pub core_relo_rec_size: __u32,
+    pub log_true_size: __u32,
+    pub prog_token_fd: __s32,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -2591,7 +3064,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_4() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_4>(),
-        128usize,
+        152usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_4))
     );
     assert_eq!(
@@ -2800,6 +3273,16 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_4() {
         )
     );
     assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).core_relo_cnt) as usize - ptr as usize },
+        116usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(core_relo_cnt)
+        )
+    );
+    assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).fd_array) as usize - ptr as usize },
         120usize,
         concat!(
@@ -2809,13 +3292,46 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_4() {
             stringify!(fd_array)
         )
     );
-}
-impl bpf_attr__bindgen_ty_4 {
-    #[inline]
-    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 4usize]> {
-        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
-        __bindgen_bitfield_unit
-    }
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).core_relos) as usize - ptr as usize },
+        128usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(core_relos)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).core_relo_rec_size) as usize - ptr as usize },
+        136usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(core_relo_rec_size)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).log_true_size) as usize - ptr as usize },
+        140usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(log_true_size)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).prog_token_fd) as usize - ptr as usize },
+        144usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_4),
+            "::",
+            stringify!(prog_token_fd)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2823,6 +3339,7 @@ pub struct bpf_attr__bindgen_ty_5 {
     pub pathname: __u64,
     pub bpf_fd: __u32,
     pub file_flags: __u32,
+    pub path_fd: __s32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_5() {
@@ -2831,7 +3348,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_5() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_5>(),
-        16usize,
+        24usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_5))
     );
     assert_eq!(
@@ -2869,15 +3386,123 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_5() {
             stringify!(file_flags)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).path_fd) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_5),
+            "::",
+            stringify!(path_fd)
+        )
+    );
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Copy, Clone)]
 pub struct bpf_attr__bindgen_ty_6 {
-    pub target_fd: __u32,
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_6__bindgen_ty_1,
     pub attach_bpf_fd: __u32,
     pub attach_type: __u32,
     pub attach_flags: __u32,
     pub replace_bpf_fd: __u32,
+    pub __bindgen_anon_2: bpf_attr__bindgen_ty_6__bindgen_ty_2,
+    pub expected_revision: __u64,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_6__bindgen_ty_1 {
+    pub target_fd: __u32,
+    pub target_ifindex: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_6__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_6__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_6__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_6__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).target_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_1),
+            "::",
+            stringify!(target_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).target_ifindex) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_1),
+            "::",
+            stringify!(target_ifindex)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_6__bindgen_ty_2 {
+    pub relative_fd: __u32,
+    pub relative_id: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_6__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_6__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_6__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_6__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).relative_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_2),
+            "::",
+            stringify!(relative_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).relative_id) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_6__bindgen_ty_2),
+            "::",
+            stringify!(relative_id)
+        )
+    );
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_6() {
@@ -2886,23 +3511,13 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_6() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_6>(),
-        20usize,
+        32usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_6))
     );
     assert_eq!(
         ::std::mem::align_of::<bpf_attr__bindgen_ty_6>(),
-        4usize,
+        8usize,
         concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_6))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).target_fd) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_6),
-            "::",
-            stringify!(target_fd)
-        )
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).attach_bpf_fd) as usize - ptr as usize },
@@ -2944,6 +3559,16 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_6() {
             stringify!(replace_bpf_fd)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).expected_revision) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_6),
+            "::",
+            stringify!(expected_revision)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -2962,6 +3587,7 @@ pub struct bpf_attr__bindgen_ty_7 {
     pub ctx_out: __u64,
     pub flags: __u32,
     pub cpu: __u32,
+    pub batch_size: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_7() {
@@ -2970,7 +3596,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_7() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_7>(),
-        72usize,
+        80usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_7))
     );
     assert_eq!(
@@ -3116,6 +3742,16 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_7() {
             stringify!(bpf_attr__bindgen_ty_7),
             "::",
             stringify!(cpu)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).batch_size) as usize - ptr as usize },
+        72usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_7),
+            "::",
+            stringify!(batch_size)
         )
     );
 }
@@ -3297,14 +3933,116 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_9() {
     );
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Copy, Clone)]
 pub struct bpf_attr__bindgen_ty_10 {
-    pub target_fd: __u32,
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_10__bindgen_ty_1,
     pub attach_type: __u32,
     pub query_flags: __u32,
     pub attach_flags: __u32,
     pub prog_ids: __u64,
+    pub __bindgen_anon_2: bpf_attr__bindgen_ty_10__bindgen_ty_2,
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub prog_attach_flags: __u64,
+    pub link_ids: __u64,
+    pub link_attach_flags: __u64,
+    pub revision: __u64,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_10__bindgen_ty_1 {
+    pub target_fd: __u32,
+    pub target_ifindex: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_10__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_10__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_10__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_10__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).target_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_1),
+            "::",
+            stringify!(target_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).target_ifindex) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_1),
+            "::",
+            stringify!(target_ifindex)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_10__bindgen_ty_2 {
     pub prog_cnt: __u32,
+    pub count: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_10__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_10__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_10__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_10__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).prog_cnt) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_2),
+            "::",
+            stringify!(prog_cnt)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).count) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10__bindgen_ty_2),
+            "::",
+            stringify!(count)
+        )
+    );
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_10() {
@@ -3313,23 +4051,13 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_10() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_10>(),
-        32usize,
+        64usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_10))
     );
     assert_eq!(
         ::std::mem::align_of::<bpf_attr__bindgen_ty_10>(),
         8usize,
         concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_10))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).target_fd) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_10),
-            "::",
-            stringify!(target_fd)
-        )
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).attach_type) as usize - ptr as usize },
@@ -3372,15 +4100,52 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_10() {
         )
     );
     assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).prog_cnt) as usize - ptr as usize },
-        24usize,
+        unsafe { ::std::ptr::addr_of!((*ptr).prog_attach_flags) as usize - ptr as usize },
+        32usize,
         concat!(
             "Offset of field: ",
             stringify!(bpf_attr__bindgen_ty_10),
             "::",
-            stringify!(prog_cnt)
+            stringify!(prog_attach_flags)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).link_ids) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10),
+            "::",
+            stringify!(link_ids)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).link_attach_flags) as usize - ptr as usize },
+        48usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10),
+            "::",
+            stringify!(link_attach_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).revision) as usize - ptr as usize },
+        56usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_10),
+            "::",
+            stringify!(revision)
+        )
+    );
+}
+impl bpf_attr__bindgen_ty_10 {
+    #[inline]
+    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit
+    }
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -3432,6 +4197,9 @@ pub struct bpf_attr__bindgen_ty_12 {
     pub btf_size: __u32,
     pub btf_log_size: __u32,
     pub btf_log_level: __u32,
+    pub btf_log_true_size: __u32,
+    pub btf_flags: __u32,
+    pub btf_token_fd: __s32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_12() {
@@ -3440,7 +4208,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_12() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_12>(),
-        32usize,
+        40usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_12))
     );
     assert_eq!(
@@ -3496,6 +4264,36 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_12() {
             stringify!(bpf_attr__bindgen_ty_12),
             "::",
             stringify!(btf_log_level)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).btf_log_true_size) as usize - ptr as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(btf_log_true_size)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).btf_flags) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(btf_flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).btf_token_fd) as usize - ptr as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_12),
+            "::",
+            stringify!(btf_token_fd)
         )
     );
 }
@@ -3621,17 +4419,17 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_13() {
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct bpf_attr__bindgen_ty_14 {
-    pub prog_fd: __u32,
     pub __bindgen_anon_1: bpf_attr__bindgen_ty_14__bindgen_ty_1,
+    pub __bindgen_anon_2: bpf_attr__bindgen_ty_14__bindgen_ty_2,
     pub attach_type: __u32,
     pub flags: __u32,
-    pub __bindgen_anon_2: bpf_attr__bindgen_ty_14__bindgen_ty_2,
+    pub __bindgen_anon_3: bpf_attr__bindgen_ty_14__bindgen_ty_3,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub union bpf_attr__bindgen_ty_14__bindgen_ty_1 {
-    pub target_fd: __u32,
-    pub target_ifindex: __u32,
+    pub prog_fd: __u32,
+    pub map_fd: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_1() {
@@ -3655,11 +4453,59 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_1() {
         )
     );
     assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).target_fd) as usize - ptr as usize },
+        unsafe { ::std::ptr::addr_of!((*ptr).prog_fd) as usize - ptr as usize },
         0usize,
         concat!(
             "Offset of field: ",
             stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_1),
+            "::",
+            stringify!(prog_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).map_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_1),
+            "::",
+            stringify!(map_fd)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_14__bindgen_ty_2 {
+    pub target_fd: __u32,
+    pub target_ifindex: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).target_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2),
             "::",
             stringify!(target_fd)
         )
@@ -3669,7 +4515,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_1() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_1),
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2),
             "::",
             stringify!(target_ifindex)
         )
@@ -3677,36 +4523,42 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_1() {
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
-pub union bpf_attr__bindgen_ty_14__bindgen_ty_2 {
+pub union bpf_attr__bindgen_ty_14__bindgen_ty_3 {
     pub target_btf_id: __u32,
-    pub __bindgen_anon_1: bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1,
-    pub perf_event: bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2,
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1,
+    pub perf_event: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2,
+    pub kprobe_multi: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3,
+    pub tracing: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4,
+    pub netfilter: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5,
+    pub tcx: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6,
+    pub uprobe_multi: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7,
+    pub netkit: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1 {
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1 {
     pub iter_info: __u64,
     pub iter_info_len: __u32,
 }
 #[test]
-fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1() {
-    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1> =
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1> =
         ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
-        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1>(),
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1>(),
         16usize,
         concat!(
             "Size of: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1)
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1)
         )
     );
     assert_eq!(
-        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1>(),
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1>(),
         8usize,
         concat!(
             "Alignment of ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1)
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1)
         )
     );
     assert_eq!(
@@ -3714,7 +4566,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1),
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1),
             "::",
             stringify!(iter_info)
         )
@@ -3724,7 +4576,7 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1() {
         8usize,
         concat!(
             "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1),
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_1),
             "::",
             stringify!(iter_info_len)
         )
@@ -3732,28 +4584,28 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_1() {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2 {
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2 {
     pub bpf_cookie: __u64,
 }
 #[test]
-fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2() {
-    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2> =
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2> =
         ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
-        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2>(),
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2>(),
         8usize,
         concat!(
             "Size of: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2)
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2)
         )
     );
     assert_eq!(
-        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2>(),
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2>(),
         8usize,
         concat!(
             "Alignment of ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2)
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2)
         )
     );
     assert_eq!(
@@ -3761,31 +4613,118 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2__bindgen_ty_2),
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_2),
             "::",
             stringify!(bpf_cookie)
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3 {
+    pub flags: __u32,
+    pub cnt: __u32,
+    pub syms: __u64,
+    pub addrs: __u64,
+    pub cookies: __u64,
+}
 #[test]
-fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2() {
-    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_2> =
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3> =
         ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
-        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2>(),
-        16usize,
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3>(),
+        32usize,
         concat!(
             "Size of: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2)
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3)
         )
     );
     assert_eq!(
-        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_2>(),
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3>(),
         8usize,
         concat!(
             "Alignment of ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2)
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cnt) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3),
+            "::",
+            stringify!(cnt)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).syms) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3),
+            "::",
+            stringify!(syms)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).addrs) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3),
+            "::",
+            stringify!(addrs)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookies) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_3),
+            "::",
+            stringify!(cookies)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4 {
+    pub target_btf_id: __u32,
+    pub cookie: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4)
         )
     );
     assert_eq!(
@@ -3793,7 +4732,396 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2),
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4),
+            "::",
+            stringify!(target_btf_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookie) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_4),
+            "::",
+            stringify!(cookie)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5 {
+    pub pf: __u32,
+    pub hooknum: __u32,
+    pub priority: __s32,
+    pub flags: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pf) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5),
+            "::",
+            stringify!(pf)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hooknum) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5),
+            "::",
+            stringify!(hooknum)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).priority) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5),
+            "::",
+            stringify!(priority)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_5),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6 {
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1,
+    pub expected_revision: __u64,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1 {
+    pub relative_fd: __u32,
+    pub relative_id: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).relative_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1),
+            "::",
+            stringify!(relative_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).relative_id) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6__bindgen_ty_1),
+            "::",
+            stringify!(relative_id)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).expected_revision) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_6),
+            "::",
+            stringify!(expected_revision)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7 {
+    pub path: __u64,
+    pub offsets: __u64,
+    pub ref_ctr_offsets: __u64,
+    pub cookies: __u64,
+    pub cnt: __u32,
+    pub flags: __u32,
+    pub pid: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7>(),
+        48usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).path) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(path)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).offsets) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(offsets)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ref_ctr_offsets) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(ref_ctr_offsets)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookies) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(cookies)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cnt) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(cnt)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pid) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_7),
+            "::",
+            stringify!(pid)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8 {
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1,
+    pub expected_revision: __u64,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1 {
+    pub relative_fd: __u32,
+    pub relative_id: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).relative_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1),
+            "::",
+            stringify!(relative_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).relative_id) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8__bindgen_ty_1),
+            "::",
+            stringify!(relative_id)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).expected_revision) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3__bindgen_ty_8),
+            "::",
+            stringify!(expected_revision)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_3() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_14__bindgen_ty_3> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3>(),
+        48usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_14__bindgen_ty_3>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).target_btf_id) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
             "::",
             stringify!(target_btf_id)
         )
@@ -3803,9 +5131,69 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14__bindgen_ty_2() {
         0usize,
         concat!(
             "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_2),
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
             "::",
             stringify!(perf_event)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).kprobe_multi) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
+            "::",
+            stringify!(kprobe_multi)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tracing) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
+            "::",
+            stringify!(tracing)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).netfilter) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
+            "::",
+            stringify!(netfilter)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tcx) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
+            "::",
+            stringify!(tcx)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).uprobe_multi) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
+            "::",
+            stringify!(uprobe_multi)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).netkit) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_14__bindgen_ty_3),
+            "::",
+            stringify!(netkit)
         )
     );
 }
@@ -3816,23 +5204,13 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr__bindgen_ty_14>(),
-        32usize,
+        64usize,
         concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_14))
     );
     assert_eq!(
         ::std::mem::align_of::<bpf_attr__bindgen_ty_14>(),
         8usize,
         concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_14))
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).prog_fd) as usize - ptr as usize },
-        0usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_14),
-            "::",
-            stringify!(prog_fd)
-        )
     );
     assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).attach_type) as usize - ptr as usize },
@@ -3856,12 +5234,108 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_14() {
     );
 }
 #[repr(C)]
-#[derive(Debug, Copy, Clone)]
+#[derive(Copy, Clone)]
 pub struct bpf_attr__bindgen_ty_15 {
     pub link_fd: __u32,
-    pub new_prog_fd: __u32,
+    pub __bindgen_anon_1: bpf_attr__bindgen_ty_15__bindgen_ty_1,
     pub flags: __u32,
+    pub __bindgen_anon_2: bpf_attr__bindgen_ty_15__bindgen_ty_2,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_15__bindgen_ty_1 {
+    pub new_prog_fd: __u32,
+    pub new_map_fd: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_15__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_15__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_15__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_15__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).new_prog_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_1),
+            "::",
+            stringify!(new_prog_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).new_map_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_1),
+            "::",
+            stringify!(new_map_fd)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_attr__bindgen_ty_15__bindgen_ty_2 {
     pub old_prog_fd: __u32,
+    pub old_map_fd: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_15__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_15__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_15__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_15__bindgen_ty_2>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).old_prog_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_2),
+            "::",
+            stringify!(old_prog_fd)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).old_map_fd) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_15__bindgen_ty_2),
+            "::",
+            stringify!(old_map_fd)
+        )
+    );
 }
 #[test]
 fn bindgen_test_layout_bpf_attr__bindgen_ty_15() {
@@ -3889,16 +5363,6 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_15() {
         )
     );
     assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).new_prog_fd) as usize - ptr as usize },
-        4usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_15),
-            "::",
-            stringify!(new_prog_fd)
-        )
-    );
-    assert_eq!(
         unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
         8usize,
         concat!(
@@ -3906,16 +5370,6 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_15() {
             stringify!(bpf_attr__bindgen_ty_15),
             "::",
             stringify!(flags)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).old_prog_fd) as usize - ptr as usize },
-        12usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_attr__bindgen_ty_15),
-            "::",
-            stringify!(old_prog_fd)
         )
     );
 }
@@ -4076,13 +5530,55 @@ fn bindgen_test_layout_bpf_attr__bindgen_ty_19() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_attr__bindgen_ty_20 {
+    pub flags: __u32,
+    pub bpffs_fd: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_attr__bindgen_ty_20() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_attr__bindgen_ty_20> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_attr__bindgen_ty_20>(),
+        8usize,
+        concat!("Size of: ", stringify!(bpf_attr__bindgen_ty_20))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_attr__bindgen_ty_20>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_attr__bindgen_ty_20))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_20),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).bpffs_fd) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr__bindgen_ty_20),
+            "::",
+            stringify!(bpffs_fd)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_attr() {
     const UNINIT: ::std::mem::MaybeUninit<bpf_attr> = ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_attr>(),
-        128usize,
+        152usize,
         concat!("Size of: ", stringify!(bpf_attr))
     );
     assert_eq!(
@@ -4208,6 +5704,16 @@ fn bindgen_test_layout_bpf_attr() {
             stringify!(bpf_attr),
             "::",
             stringify!(prog_bind_map)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).token_create) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_attr),
+            "::",
+            stringify!(token_create)
         )
     );
 }
@@ -4387,75 +5893,116 @@ pub const bpf_func_id_BPF_FUNC_timer_cancel: bpf_func_id = 172;
 pub const bpf_func_id_BPF_FUNC_get_func_ip: bpf_func_id = 173;
 pub const bpf_func_id_BPF_FUNC_get_attach_cookie: bpf_func_id = 174;
 pub const bpf_func_id_BPF_FUNC_task_pt_regs: bpf_func_id = 175;
-pub const bpf_func_id___BPF_FUNC_MAX_ID: bpf_func_id = 176;
+pub const bpf_func_id_BPF_FUNC_get_branch_snapshot: bpf_func_id = 176;
+pub const bpf_func_id_BPF_FUNC_trace_vprintk: bpf_func_id = 177;
+pub const bpf_func_id_BPF_FUNC_skc_to_unix_sock: bpf_func_id = 178;
+pub const bpf_func_id_BPF_FUNC_kallsyms_lookup_name: bpf_func_id = 179;
+pub const bpf_func_id_BPF_FUNC_find_vma: bpf_func_id = 180;
+pub const bpf_func_id_BPF_FUNC_loop: bpf_func_id = 181;
+pub const bpf_func_id_BPF_FUNC_strncmp: bpf_func_id = 182;
+pub const bpf_func_id_BPF_FUNC_get_func_arg: bpf_func_id = 183;
+pub const bpf_func_id_BPF_FUNC_get_func_ret: bpf_func_id = 184;
+pub const bpf_func_id_BPF_FUNC_get_func_arg_cnt: bpf_func_id = 185;
+pub const bpf_func_id_BPF_FUNC_get_retval: bpf_func_id = 186;
+pub const bpf_func_id_BPF_FUNC_set_retval: bpf_func_id = 187;
+pub const bpf_func_id_BPF_FUNC_xdp_get_buff_len: bpf_func_id = 188;
+pub const bpf_func_id_BPF_FUNC_xdp_load_bytes: bpf_func_id = 189;
+pub const bpf_func_id_BPF_FUNC_xdp_store_bytes: bpf_func_id = 190;
+pub const bpf_func_id_BPF_FUNC_copy_from_user_task: bpf_func_id = 191;
+pub const bpf_func_id_BPF_FUNC_skb_set_tstamp: bpf_func_id = 192;
+pub const bpf_func_id_BPF_FUNC_ima_file_hash: bpf_func_id = 193;
+pub const bpf_func_id_BPF_FUNC_kptr_xchg: bpf_func_id = 194;
+pub const bpf_func_id_BPF_FUNC_map_lookup_percpu_elem: bpf_func_id = 195;
+pub const bpf_func_id_BPF_FUNC_skc_to_mptcp_sock: bpf_func_id = 196;
+pub const bpf_func_id_BPF_FUNC_dynptr_from_mem: bpf_func_id = 197;
+pub const bpf_func_id_BPF_FUNC_ringbuf_reserve_dynptr: bpf_func_id = 198;
+pub const bpf_func_id_BPF_FUNC_ringbuf_submit_dynptr: bpf_func_id = 199;
+pub const bpf_func_id_BPF_FUNC_ringbuf_discard_dynptr: bpf_func_id = 200;
+pub const bpf_func_id_BPF_FUNC_dynptr_read: bpf_func_id = 201;
+pub const bpf_func_id_BPF_FUNC_dynptr_write: bpf_func_id = 202;
+pub const bpf_func_id_BPF_FUNC_dynptr_data: bpf_func_id = 203;
+pub const bpf_func_id_BPF_FUNC_tcp_raw_gen_syncookie_ipv4: bpf_func_id = 204;
+pub const bpf_func_id_BPF_FUNC_tcp_raw_gen_syncookie_ipv6: bpf_func_id = 205;
+pub const bpf_func_id_BPF_FUNC_tcp_raw_check_syncookie_ipv4: bpf_func_id = 206;
+pub const bpf_func_id_BPF_FUNC_tcp_raw_check_syncookie_ipv6: bpf_func_id = 207;
+pub const bpf_func_id_BPF_FUNC_ktime_get_tai_ns: bpf_func_id = 208;
+pub const bpf_func_id_BPF_FUNC_user_ringbuf_drain: bpf_func_id = 209;
+pub const bpf_func_id_BPF_FUNC_cgrp_storage_get: bpf_func_id = 210;
+pub const bpf_func_id_BPF_FUNC_cgrp_storage_delete: bpf_func_id = 211;
+pub const bpf_func_id___BPF_FUNC_MAX_ID: bpf_func_id = 212;
 pub type bpf_func_id = ::std::os::raw::c_uint;
-pub const BPF_F_RECOMPUTE_CSUM: _bindgen_ty_4 = 1;
-pub const BPF_F_INVALIDATE_HASH: _bindgen_ty_4 = 2;
-pub type _bindgen_ty_4 = ::std::os::raw::c_uint;
-pub const BPF_F_HDR_FIELD_MASK: _bindgen_ty_5 = 15;
-pub type _bindgen_ty_5 = ::std::os::raw::c_uint;
-pub const BPF_F_PSEUDO_HDR: _bindgen_ty_6 = 16;
-pub const BPF_F_MARK_MANGLED_0: _bindgen_ty_6 = 32;
-pub const BPF_F_MARK_ENFORCE: _bindgen_ty_6 = 64;
+pub const BPF_F_RECOMPUTE_CSUM: _bindgen_ty_6 = 1;
+pub const BPF_F_INVALIDATE_HASH: _bindgen_ty_6 = 2;
 pub type _bindgen_ty_6 = ::std::os::raw::c_uint;
-pub const BPF_F_INGRESS: _bindgen_ty_7 = 1;
+pub const BPF_F_HDR_FIELD_MASK: _bindgen_ty_7 = 15;
 pub type _bindgen_ty_7 = ::std::os::raw::c_uint;
-pub const BPF_F_TUNINFO_IPV6: _bindgen_ty_8 = 1;
+pub const BPF_F_PSEUDO_HDR: _bindgen_ty_8 = 16;
+pub const BPF_F_MARK_MANGLED_0: _bindgen_ty_8 = 32;
+pub const BPF_F_MARK_ENFORCE: _bindgen_ty_8 = 64;
 pub type _bindgen_ty_8 = ::std::os::raw::c_uint;
-pub const BPF_F_SKIP_FIELD_MASK: _bindgen_ty_9 = 255;
-pub const BPF_F_USER_STACK: _bindgen_ty_9 = 256;
-pub const BPF_F_FAST_STACK_CMP: _bindgen_ty_9 = 512;
-pub const BPF_F_REUSE_STACKID: _bindgen_ty_9 = 1024;
-pub const BPF_F_USER_BUILD_ID: _bindgen_ty_9 = 2048;
+pub const BPF_F_INGRESS: _bindgen_ty_9 = 1;
 pub type _bindgen_ty_9 = ::std::os::raw::c_uint;
-pub const BPF_F_ZERO_CSUM_TX: _bindgen_ty_10 = 2;
-pub const BPF_F_DONT_FRAGMENT: _bindgen_ty_10 = 4;
-pub const BPF_F_SEQ_NUMBER: _bindgen_ty_10 = 8;
+pub const BPF_F_TUNINFO_IPV6: _bindgen_ty_10 = 1;
 pub type _bindgen_ty_10 = ::std::os::raw::c_uint;
-pub const BPF_F_INDEX_MASK: _bindgen_ty_11 = 4294967295;
-pub const BPF_F_CURRENT_CPU: _bindgen_ty_11 = 4294967295;
-pub const BPF_F_CTXLEN_MASK: _bindgen_ty_11 = 4503595332403200;
-pub type _bindgen_ty_11 = ::std::os::raw::c_ulong;
-pub const BPF_F_CURRENT_NETNS: _bindgen_ty_12 = -1;
-pub type _bindgen_ty_12 = ::std::os::raw::c_int;
-pub const BPF_CSUM_LEVEL_QUERY: _bindgen_ty_13 = 0;
-pub const BPF_CSUM_LEVEL_INC: _bindgen_ty_13 = 1;
-pub const BPF_CSUM_LEVEL_DEC: _bindgen_ty_13 = 2;
-pub const BPF_CSUM_LEVEL_RESET: _bindgen_ty_13 = 3;
+pub const BPF_F_SKIP_FIELD_MASK: _bindgen_ty_11 = 255;
+pub const BPF_F_USER_STACK: _bindgen_ty_11 = 256;
+pub const BPF_F_FAST_STACK_CMP: _bindgen_ty_11 = 512;
+pub const BPF_F_REUSE_STACKID: _bindgen_ty_11 = 1024;
+pub const BPF_F_USER_BUILD_ID: _bindgen_ty_11 = 2048;
+pub type _bindgen_ty_11 = ::std::os::raw::c_uint;
+pub const BPF_F_ZERO_CSUM_TX: _bindgen_ty_12 = 2;
+pub const BPF_F_DONT_FRAGMENT: _bindgen_ty_12 = 4;
+pub const BPF_F_SEQ_NUMBER: _bindgen_ty_12 = 8;
+pub const BPF_F_NO_TUNNEL_KEY: _bindgen_ty_12 = 16;
+pub type _bindgen_ty_12 = ::std::os::raw::c_uint;
+pub const BPF_F_TUNINFO_FLAGS: _bindgen_ty_13 = 16;
 pub type _bindgen_ty_13 = ::std::os::raw::c_uint;
-pub const BPF_F_ADJ_ROOM_FIXED_GSO: _bindgen_ty_14 = 1;
-pub const BPF_F_ADJ_ROOM_ENCAP_L3_IPV4: _bindgen_ty_14 = 2;
-pub const BPF_F_ADJ_ROOM_ENCAP_L3_IPV6: _bindgen_ty_14 = 4;
-pub const BPF_F_ADJ_ROOM_ENCAP_L4_GRE: _bindgen_ty_14 = 8;
-pub const BPF_F_ADJ_ROOM_ENCAP_L4_UDP: _bindgen_ty_14 = 16;
-pub const BPF_F_ADJ_ROOM_NO_CSUM_RESET: _bindgen_ty_14 = 32;
-pub const BPF_F_ADJ_ROOM_ENCAP_L2_ETH: _bindgen_ty_14 = 64;
-pub type _bindgen_ty_14 = ::std::os::raw::c_uint;
-pub const BPF_ADJ_ROOM_ENCAP_L2_MASK: _bindgen_ty_15 = 255;
-pub const BPF_ADJ_ROOM_ENCAP_L2_SHIFT: _bindgen_ty_15 = 56;
-pub type _bindgen_ty_15 = ::std::os::raw::c_uint;
-pub const BPF_F_SYSCTL_BASE_NAME: _bindgen_ty_16 = 1;
+pub const BPF_F_INDEX_MASK: _bindgen_ty_14 = 4294967295;
+pub const BPF_F_CURRENT_CPU: _bindgen_ty_14 = 4294967295;
+pub const BPF_F_CTXLEN_MASK: _bindgen_ty_14 = 4503595332403200;
+pub type _bindgen_ty_14 = ::std::os::raw::c_ulong;
+pub const BPF_F_CURRENT_NETNS: _bindgen_ty_15 = -1;
+pub type _bindgen_ty_15 = ::std::os::raw::c_int;
+pub const BPF_CSUM_LEVEL_QUERY: _bindgen_ty_16 = 0;
+pub const BPF_CSUM_LEVEL_INC: _bindgen_ty_16 = 1;
+pub const BPF_CSUM_LEVEL_DEC: _bindgen_ty_16 = 2;
+pub const BPF_CSUM_LEVEL_RESET: _bindgen_ty_16 = 3;
 pub type _bindgen_ty_16 = ::std::os::raw::c_uint;
-pub const BPF_LOCAL_STORAGE_GET_F_CREATE: _bindgen_ty_17 = 1;
-pub const BPF_SK_STORAGE_GET_F_CREATE: _bindgen_ty_17 = 1;
+pub const BPF_F_ADJ_ROOM_FIXED_GSO: _bindgen_ty_17 = 1;
+pub const BPF_F_ADJ_ROOM_ENCAP_L3_IPV4: _bindgen_ty_17 = 2;
+pub const BPF_F_ADJ_ROOM_ENCAP_L3_IPV6: _bindgen_ty_17 = 4;
+pub const BPF_F_ADJ_ROOM_ENCAP_L4_GRE: _bindgen_ty_17 = 8;
+pub const BPF_F_ADJ_ROOM_ENCAP_L4_UDP: _bindgen_ty_17 = 16;
+pub const BPF_F_ADJ_ROOM_NO_CSUM_RESET: _bindgen_ty_17 = 32;
+pub const BPF_F_ADJ_ROOM_ENCAP_L2_ETH: _bindgen_ty_17 = 64;
+pub const BPF_F_ADJ_ROOM_DECAP_L3_IPV4: _bindgen_ty_17 = 128;
+pub const BPF_F_ADJ_ROOM_DECAP_L3_IPV6: _bindgen_ty_17 = 256;
 pub type _bindgen_ty_17 = ::std::os::raw::c_uint;
-pub const BPF_F_GET_BRANCH_RECORDS_SIZE: _bindgen_ty_18 = 1;
+pub const BPF_ADJ_ROOM_ENCAP_L2_MASK: _bindgen_ty_18 = 255;
+pub const BPF_ADJ_ROOM_ENCAP_L2_SHIFT: _bindgen_ty_18 = 56;
 pub type _bindgen_ty_18 = ::std::os::raw::c_uint;
-pub const BPF_RB_NO_WAKEUP: _bindgen_ty_19 = 1;
-pub const BPF_RB_FORCE_WAKEUP: _bindgen_ty_19 = 2;
+pub const BPF_F_SYSCTL_BASE_NAME: _bindgen_ty_19 = 1;
 pub type _bindgen_ty_19 = ::std::os::raw::c_uint;
-pub const BPF_RB_AVAIL_DATA: _bindgen_ty_20 = 0;
-pub const BPF_RB_RING_SIZE: _bindgen_ty_20 = 1;
-pub const BPF_RB_CONS_POS: _bindgen_ty_20 = 2;
-pub const BPF_RB_PROD_POS: _bindgen_ty_20 = 3;
+pub const BPF_LOCAL_STORAGE_GET_F_CREATE: _bindgen_ty_20 = 1;
+pub const BPF_SK_STORAGE_GET_F_CREATE: _bindgen_ty_20 = 1;
 pub type _bindgen_ty_20 = ::std::os::raw::c_uint;
-pub const BPF_RINGBUF_BUSY_BIT: _bindgen_ty_21 = 2147483648;
-pub const BPF_RINGBUF_DISCARD_BIT: _bindgen_ty_21 = 1073741824;
-pub const BPF_RINGBUF_HDR_SZ: _bindgen_ty_21 = 8;
+pub const BPF_F_GET_BRANCH_RECORDS_SIZE: _bindgen_ty_21 = 1;
 pub type _bindgen_ty_21 = ::std::os::raw::c_uint;
-pub const BPF_SK_LOOKUP_F_REPLACE: _bindgen_ty_22 = 1;
-pub const BPF_SK_LOOKUP_F_NO_REUSEPORT: _bindgen_ty_22 = 2;
+pub const BPF_RB_NO_WAKEUP: _bindgen_ty_22 = 1;
+pub const BPF_RB_FORCE_WAKEUP: _bindgen_ty_22 = 2;
 pub type _bindgen_ty_22 = ::std::os::raw::c_uint;
+pub const BPF_RB_AVAIL_DATA: _bindgen_ty_23 = 0;
+pub const BPF_RB_RING_SIZE: _bindgen_ty_23 = 1;
+pub const BPF_RB_CONS_POS: _bindgen_ty_23 = 2;
+pub const BPF_RB_PROD_POS: _bindgen_ty_23 = 3;
+pub type _bindgen_ty_23 = ::std::os::raw::c_uint;
+pub const BPF_RINGBUF_BUSY_BIT: _bindgen_ty_24 = 2147483648;
+pub const BPF_RINGBUF_DISCARD_BIT: _bindgen_ty_24 = 1073741824;
+pub const BPF_RINGBUF_HDR_SZ: _bindgen_ty_24 = 8;
+pub type _bindgen_ty_24 = ::std::os::raw::c_uint;
+pub const BPF_SK_LOOKUP_F_REPLACE: _bindgen_ty_25 = 1;
+pub const BPF_SK_LOOKUP_F_NO_REUSEPORT: _bindgen_ty_25 = 2;
+pub type _bindgen_ty_25 = ::std::os::raw::c_uint;
 pub const bpf_adj_room_mode_BPF_ADJ_ROOM_NET: bpf_adj_room_mode = 0;
 pub const bpf_adj_room_mode_BPF_ADJ_ROOM_MAC: bpf_adj_room_mode = 1;
 pub type bpf_adj_room_mode = ::std::os::raw::c_uint;
@@ -4466,11 +6013,14 @@ pub const bpf_lwt_encap_mode_BPF_LWT_ENCAP_SEG6: bpf_lwt_encap_mode = 0;
 pub const bpf_lwt_encap_mode_BPF_LWT_ENCAP_SEG6_INLINE: bpf_lwt_encap_mode = 1;
 pub const bpf_lwt_encap_mode_BPF_LWT_ENCAP_IP: bpf_lwt_encap_mode = 2;
 pub type bpf_lwt_encap_mode = ::std::os::raw::c_uint;
-pub const BPF_F_BPRM_SECUREEXEC: _bindgen_ty_23 = 1;
-pub type _bindgen_ty_23 = ::std::os::raw::c_uint;
-pub const BPF_F_BROADCAST: _bindgen_ty_24 = 8;
-pub const BPF_F_EXCLUDE_INGRESS: _bindgen_ty_24 = 16;
-pub type _bindgen_ty_24 = ::std::os::raw::c_uint;
+pub const BPF_F_BPRM_SECUREEXEC: _bindgen_ty_26 = 1;
+pub type _bindgen_ty_26 = ::std::os::raw::c_uint;
+pub const BPF_F_BROADCAST: _bindgen_ty_27 = 8;
+pub const BPF_F_EXCLUDE_INGRESS: _bindgen_ty_27 = 16;
+pub type _bindgen_ty_27 = ::std::os::raw::c_uint;
+pub const BPF_SKB_TSTAMP_UNSPEC: _bindgen_ty_28 = 0;
+pub const BPF_SKB_TSTAMP_DELIVERY_MONO: _bindgen_ty_28 = 1;
+pub type _bindgen_ty_28 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct __sk_buff {
@@ -4506,6 +6056,10 @@ pub struct __sk_buff {
     pub gso_segs: __u32,
     pub __bindgen_anon_2: __sk_buff__bindgen_ty_2,
     pub gso_size: __u32,
+    pub tstamp_type: __u8,
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 3usize]>,
+    pub hwtstamp: __u64,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4593,7 +6147,7 @@ fn bindgen_test_layout___sk_buff() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<__sk_buff>(),
-        184usize,
+        192usize,
         concat!("Size of: ", stringify!(__sk_buff))
     );
     assert_eq!(
@@ -4901,6 +6455,33 @@ fn bindgen_test_layout___sk_buff() {
             stringify!(gso_size)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tstamp_type) as usize - ptr as usize },
+        180usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(tstamp_type)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hwtstamp) as usize - ptr as usize },
+        184usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(__sk_buff),
+            "::",
+            stringify!(hwtstamp)
+        )
+    );
+}
+impl __sk_buff {
+    #[inline]
+    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 3usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 3usize]> = Default::default();
+        __bindgen_bitfield_unit
+    }
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4909,8 +6490,9 @@ pub struct bpf_tunnel_key {
     pub __bindgen_anon_1: bpf_tunnel_key__bindgen_ty_1,
     pub tunnel_tos: __u8,
     pub tunnel_ttl: __u8,
-    pub tunnel_ext: __u16,
+    pub __bindgen_anon_2: bpf_tunnel_key__bindgen_ty_2,
     pub tunnel_label: __u32,
+    pub __bindgen_anon_3: bpf_tunnel_key__bindgen_ty_3,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -4954,13 +6536,97 @@ fn bindgen_test_layout_bpf_tunnel_key__bindgen_ty_1() {
         )
     );
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_tunnel_key__bindgen_ty_2 {
+    pub tunnel_ext: __u16,
+    pub tunnel_flags: __be16,
+}
+#[test]
+fn bindgen_test_layout_bpf_tunnel_key__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_tunnel_key__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_tunnel_key__bindgen_ty_2>(),
+        2usize,
+        concat!("Size of: ", stringify!(bpf_tunnel_key__bindgen_ty_2))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_tunnel_key__bindgen_ty_2>(),
+        2usize,
+        concat!("Alignment of ", stringify!(bpf_tunnel_key__bindgen_ty_2))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tunnel_ext) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_tunnel_key__bindgen_ty_2),
+            "::",
+            stringify!(tunnel_ext)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tunnel_flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_tunnel_key__bindgen_ty_2),
+            "::",
+            stringify!(tunnel_flags)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_tunnel_key__bindgen_ty_3 {
+    pub local_ipv4: __u32,
+    pub local_ipv6: [__u32; 4usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_tunnel_key__bindgen_ty_3() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_tunnel_key__bindgen_ty_3> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_tunnel_key__bindgen_ty_3>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_tunnel_key__bindgen_ty_3))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_tunnel_key__bindgen_ty_3>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_tunnel_key__bindgen_ty_3))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).local_ipv4) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_tunnel_key__bindgen_ty_3),
+            "::",
+            stringify!(local_ipv4)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).local_ipv6) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_tunnel_key__bindgen_ty_3),
+            "::",
+            stringify!(local_ipv6)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_tunnel_key() {
     const UNINIT: ::std::mem::MaybeUninit<bpf_tunnel_key> = ::std::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_tunnel_key>(),
-        28usize,
+        44usize,
         concat!("Size of: ", stringify!(bpf_tunnel_key))
     );
     assert_eq!(
@@ -4996,16 +6662,6 @@ fn bindgen_test_layout_bpf_tunnel_key() {
             stringify!(bpf_tunnel_key),
             "::",
             stringify!(tunnel_ttl)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).tunnel_ext) as usize - ptr as usize },
-        22usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_tunnel_key),
-            "::",
-            stringify!(tunnel_ext)
         )
     );
     assert_eq!(
@@ -5129,6 +6785,7 @@ pub const bpf_ret_code_BPF_OK: bpf_ret_code = 0;
 pub const bpf_ret_code_BPF_DROP: bpf_ret_code = 2;
 pub const bpf_ret_code_BPF_REDIRECT: bpf_ret_code = 7;
 pub const bpf_ret_code_BPF_LWT_REROUTE: bpf_ret_code = 128;
+pub const bpf_ret_code_BPF_FLOW_DISSECTOR_CONTINUE: bpf_ret_code = 129;
 pub type bpf_ret_code = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -5817,6 +7474,11 @@ fn bindgen_test_layout_bpf_sock_tuple() {
         concat!("Alignment of ", stringify!(bpf_sock_tuple))
     );
 }
+pub const tcx_action_base_TCX_NEXT: tcx_action_base = -1;
+pub const tcx_action_base_TCX_PASS: tcx_action_base = 0;
+pub const tcx_action_base_TCX_DROP: tcx_action_base = 2;
+pub const tcx_action_base_TCX_REDIRECT: tcx_action_base = 7;
+pub type tcx_action_base = ::std::os::raw::c_int;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct bpf_xdp_sock {
@@ -6614,6 +8276,9 @@ pub struct bpf_prog_info {
     pub run_time_ns: __u64,
     pub run_cnt: __u64,
     pub recursion_misses: __u64,
+    pub verified_insns: __u32,
+    pub attach_btf_obj_id: __u32,
+    pub attach_btf_id: __u32,
 }
 #[test]
 fn bindgen_test_layout_bpf_prog_info() {
@@ -6621,7 +8286,7 @@ fn bindgen_test_layout_bpf_prog_info() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_prog_info>(),
-        216usize,
+        232usize,
         concat!("Size of: ", stringify!(bpf_prog_info))
     );
     assert_eq!(
@@ -6969,6 +8634,36 @@ fn bindgen_test_layout_bpf_prog_info() {
             stringify!(recursion_misses)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).verified_insns) as usize - ptr as usize },
+        216usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(verified_insns)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).attach_btf_obj_id) as usize - ptr as usize },
+        220usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(attach_btf_obj_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).attach_btf_id) as usize - ptr as usize },
+        224usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_prog_info),
+            "::",
+            stringify!(attach_btf_id)
+        )
+    );
 }
 impl bpf_prog_info {
     #[inline]
@@ -7009,6 +8704,8 @@ pub struct bpf_map_info {
     pub btf_id: __u32,
     pub btf_key_type_id: __u32,
     pub btf_value_type_id: __u32,
+    pub btf_vmlinux_id: __u32,
+    pub map_extra: __u64,
 }
 #[test]
 fn bindgen_test_layout_bpf_map_info() {
@@ -7016,7 +8713,7 @@ fn bindgen_test_layout_bpf_map_info() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_map_info>(),
-        80usize,
+        88usize,
         concat!("Size of: ", stringify!(bpf_map_info))
     );
     assert_eq!(
@@ -7164,6 +8861,26 @@ fn bindgen_test_layout_bpf_map_info() {
             stringify!(btf_value_type_id)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).btf_vmlinux_id) as usize - ptr as usize },
+        76usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(btf_vmlinux_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).map_extra) as usize - ptr as usize },
+        80usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_map_info),
+            "::",
+            stringify!(map_extra)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -7267,6 +8984,13 @@ pub union bpf_link_info__bindgen_ty_1 {
     pub iter: bpf_link_info__bindgen_ty_1__bindgen_ty_4,
     pub netns: bpf_link_info__bindgen_ty_1__bindgen_ty_5,
     pub xdp: bpf_link_info__bindgen_ty_1__bindgen_ty_6,
+    pub struct_ops: bpf_link_info__bindgen_ty_1__bindgen_ty_7,
+    pub netfilter: bpf_link_info__bindgen_ty_1__bindgen_ty_8,
+    pub kprobe_multi: bpf_link_info__bindgen_ty_1__bindgen_ty_9,
+    pub uprobe_multi: bpf_link_info__bindgen_ty_1__bindgen_ty_10,
+    pub perf_event: bpf_link_info__bindgen_ty_1__bindgen_ty_11,
+    pub tcx: bpf_link_info__bindgen_ty_1__bindgen_ty_12,
+    pub netkit: bpf_link_info__bindgen_ty_1__bindgen_ty_13,
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -7429,6 +9153,7 @@ pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_4 {
     pub target_name: __u64,
     pub target_name_len: __u32,
     pub __bindgen_anon_1: bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_1,
+    pub __bindgen_anon_2: bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -7507,6 +9232,156 @@ fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_1()
         )
     );
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2 {
+    pub cgroup: bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1,
+    pub task: bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1 {
+    pub cgroup_id: __u64,
+    pub order: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1>(
+        ),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1>(
+        ),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cgroup_id) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(cgroup_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).order) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_1),
+            "::",
+            stringify!(order)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2 {
+    pub tid: __u32,
+    pub pid: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2>(
+        ),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2>(
+        ),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tid) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2),
+            "::",
+            stringify!(tid)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pid) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2__bindgen_ty_2),
+            "::",
+            stringify!(pid)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cgroup) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2),
+            "::",
+            stringify!(cgroup)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).task) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4__bindgen_ty_2),
+            "::",
+            stringify!(task)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_4() {
     const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_4> =
@@ -7514,7 +9389,7 @@ fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_4() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_4>(),
-        16usize,
+        32usize,
         concat!(
             "Size of: ",
             stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_4)
@@ -7634,6 +9509,836 @@ fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_6() {
         )
     );
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_7 {
+    pub map_id: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_7() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_7> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_7>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_7)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_7>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_7)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).map_id) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_7),
+            "::",
+            stringify!(map_id)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_8 {
+    pub pf: __u32,
+    pub hooknum: __u32,
+    pub priority: __s32,
+    pub flags: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_8() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_8> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_8>(),
+        16usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_8)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_8>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_8)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pf) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_8),
+            "::",
+            stringify!(pf)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).hooknum) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_8),
+            "::",
+            stringify!(hooknum)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).priority) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_8),
+            "::",
+            stringify!(priority)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_8),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_9 {
+    pub addrs: __u64,
+    pub count: __u32,
+    pub flags: __u32,
+    pub missed: __u64,
+    pub cookies: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_9() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_9> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_9>(),
+        32usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_9>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).addrs) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9),
+            "::",
+            stringify!(addrs)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).count) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9),
+            "::",
+            stringify!(count)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).missed) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9),
+            "::",
+            stringify!(missed)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookies) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_9),
+            "::",
+            stringify!(cookies)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_10 {
+    pub path: __u64,
+    pub offsets: __u64,
+    pub ref_ctr_offsets: __u64,
+    pub cookies: __u64,
+    pub path_size: __u32,
+    pub count: __u32,
+    pub flags: __u32,
+    pub pid: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_10() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_10> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_10>(),
+        48usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_10>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).path) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(path)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).offsets) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(offsets)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ref_ctr_offsets) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(ref_ctr_offsets)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookies) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(cookies)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).path_size) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(path_size)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).count) as usize - ptr as usize },
+        36usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(count)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        40usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).pid) as usize - ptr as usize },
+        44usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_10),
+            "::",
+            stringify!(pid)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_11 {
+    pub type_: __u32,
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub __bindgen_anon_1: bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1 {
+    pub uprobe: bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1,
+    pub kprobe: bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2,
+    pub tracepoint: bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3,
+    pub event: bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1 {
+    pub file_name: __u64,
+    pub name_len: __u32,
+    pub offset: __u32,
+    pub cookie: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1>(
+        ),
+        24usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<
+            bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1,
+        >(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).file_name) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(file_name)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).name_len) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(name_len)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).offset) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(offset)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookie) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(cookie)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2 {
+    pub func_name: __u64,
+    pub name_len: __u32,
+    pub offset: __u32,
+    pub addr: __u64,
+    pub missed: __u64,
+    pub cookie: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2>(
+        ),
+        40usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<
+            bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2,
+        >(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).func_name) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(func_name)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).name_len) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(name_len)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).offset) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(offset)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).addr) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(addr)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).missed) as usize - ptr as usize },
+        24usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(missed)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookie) as usize - ptr as usize },
+        32usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(cookie)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3 {
+    pub tp_name: __u64,
+    pub name_len: __u32,
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub cookie: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3>(
+        ),
+        24usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<
+            bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3,
+        >(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tp_name) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(tp_name)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).name_len) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(name_len)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookie) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3),
+            "::",
+            stringify!(cookie)
+        )
+    );
+}
+impl bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_3 {
+    #[inline]
+    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4 {
+    pub config: __u64,
+    pub type_: __u32,
+    pub _bitfield_align_1: [u8; 0],
+    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 4usize]>,
+    pub cookie: __u64,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4>(
+        ),
+        24usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<
+            bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4,
+        >(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).config) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(config)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(type_)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).cookie) as usize - ptr as usize },
+        16usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4),
+            "::",
+            stringify!(cookie)
+        )
+    );
+}
+impl bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1__bindgen_ty_4 {
+    #[inline]
+    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit
+    }
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<
+        bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1,
+    > = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1>(),
+        40usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).uprobe) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1),
+            "::",
+            stringify!(uprobe)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).kprobe) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1),
+            "::",
+            stringify!(kprobe)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tracepoint) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1),
+            "::",
+            stringify!(tracepoint)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).event) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11__bindgen_ty_1),
+            "::",
+            stringify!(event)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_11() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_11> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11>(),
+        48usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_11>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).type_) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_11),
+            "::",
+            stringify!(type_)
+        )
+    );
+}
+impl bpf_link_info__bindgen_ty_1__bindgen_ty_11 {
+    #[inline]
+    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 4usize]> {
+        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 4usize]> = Default::default();
+        __bindgen_bitfield_unit
+    }
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_12 {
+    pub ifindex: __u32,
+    pub attach_type: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_12() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_12> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_12>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_12)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_12>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_12)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ifindex) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_12),
+            "::",
+            stringify!(ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).attach_type) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_12),
+            "::",
+            stringify!(attach_type)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_link_info__bindgen_ty_1__bindgen_ty_13 {
+    pub ifindex: __u32,
+    pub attach_type: __u32,
+}
+#[test]
+fn bindgen_test_layout_bpf_link_info__bindgen_ty_1__bindgen_ty_13() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1__bindgen_ty_13> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_13>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_13)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_link_info__bindgen_ty_1__bindgen_ty_13>(),
+        4usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_13)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ifindex) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_13),
+            "::",
+            stringify!(ifindex)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).attach_type) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1__bindgen_ty_13),
+            "::",
+            stringify!(attach_type)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_link_info__bindgen_ty_1() {
     const UNINIT: ::std::mem::MaybeUninit<bpf_link_info__bindgen_ty_1> =
@@ -7641,7 +10346,7 @@ fn bindgen_test_layout_bpf_link_info__bindgen_ty_1() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_link_info__bindgen_ty_1>(),
-        16usize,
+        48usize,
         concat!("Size of: ", stringify!(bpf_link_info__bindgen_ty_1))
     );
     assert_eq!(
@@ -7709,6 +10414,76 @@ fn bindgen_test_layout_bpf_link_info__bindgen_ty_1() {
             stringify!(xdp)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).struct_ops) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(struct_ops)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).netfilter) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(netfilter)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).kprobe_multi) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(kprobe_multi)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).uprobe_multi) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(uprobe_multi)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).perf_event) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(perf_event)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tcx) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(tcx)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).netkit) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_link_info__bindgen_ty_1),
+            "::",
+            stringify!(netkit)
+        )
+    );
 }
 #[test]
 fn bindgen_test_layout_bpf_link_info() {
@@ -7716,7 +10491,7 @@ fn bindgen_test_layout_bpf_link_info() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_link_info>(),
-        32usize,
+        64usize,
         concat!("Size of: ", stringify!(bpf_link_info))
     );
     assert_eq!(
@@ -7957,6 +10732,7 @@ pub struct bpf_sock_ops {
     pub __bindgen_anon_4: bpf_sock_ops__bindgen_ty_4,
     pub skb_len: __u32,
     pub skb_tcp_flags: __u32,
+    pub skb_hwtstamp: __u64,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -8137,7 +10913,7 @@ fn bindgen_test_layout_bpf_sock_ops() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_sock_ops>(),
-        216usize,
+        224usize,
         concat!("Size of: ", stringify!(bpf_sock_ops))
     );
     assert_eq!(
@@ -8505,60 +11281,71 @@ fn bindgen_test_layout_bpf_sock_ops() {
             stringify!(skb_tcp_flags)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).skb_hwtstamp) as usize - ptr as usize },
+        216usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sock_ops),
+            "::",
+            stringify!(skb_hwtstamp)
+        )
+    );
 }
-pub const BPF_SOCK_OPS_RTO_CB_FLAG: _bindgen_ty_25 = 1;
-pub const BPF_SOCK_OPS_RETRANS_CB_FLAG: _bindgen_ty_25 = 2;
-pub const BPF_SOCK_OPS_STATE_CB_FLAG: _bindgen_ty_25 = 4;
-pub const BPF_SOCK_OPS_RTT_CB_FLAG: _bindgen_ty_25 = 8;
-pub const BPF_SOCK_OPS_PARSE_ALL_HDR_OPT_CB_FLAG: _bindgen_ty_25 = 16;
-pub const BPF_SOCK_OPS_PARSE_UNKNOWN_HDR_OPT_CB_FLAG: _bindgen_ty_25 = 32;
-pub const BPF_SOCK_OPS_WRITE_HDR_OPT_CB_FLAG: _bindgen_ty_25 = 64;
-pub const BPF_SOCK_OPS_ALL_CB_FLAGS: _bindgen_ty_25 = 127;
-pub type _bindgen_ty_25 = ::std::os::raw::c_uint;
-pub const BPF_SOCK_OPS_VOID: _bindgen_ty_26 = 0;
-pub const BPF_SOCK_OPS_TIMEOUT_INIT: _bindgen_ty_26 = 1;
-pub const BPF_SOCK_OPS_RWND_INIT: _bindgen_ty_26 = 2;
-pub const BPF_SOCK_OPS_TCP_CONNECT_CB: _bindgen_ty_26 = 3;
-pub const BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB: _bindgen_ty_26 = 4;
-pub const BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB: _bindgen_ty_26 = 5;
-pub const BPF_SOCK_OPS_NEEDS_ECN: _bindgen_ty_26 = 6;
-pub const BPF_SOCK_OPS_BASE_RTT: _bindgen_ty_26 = 7;
-pub const BPF_SOCK_OPS_RTO_CB: _bindgen_ty_26 = 8;
-pub const BPF_SOCK_OPS_RETRANS_CB: _bindgen_ty_26 = 9;
-pub const BPF_SOCK_OPS_STATE_CB: _bindgen_ty_26 = 10;
-pub const BPF_SOCK_OPS_TCP_LISTEN_CB: _bindgen_ty_26 = 11;
-pub const BPF_SOCK_OPS_RTT_CB: _bindgen_ty_26 = 12;
-pub const BPF_SOCK_OPS_PARSE_HDR_OPT_CB: _bindgen_ty_26 = 13;
-pub const BPF_SOCK_OPS_HDR_OPT_LEN_CB: _bindgen_ty_26 = 14;
-pub const BPF_SOCK_OPS_WRITE_HDR_OPT_CB: _bindgen_ty_26 = 15;
-pub type _bindgen_ty_26 = ::std::os::raw::c_uint;
-pub const BPF_TCP_ESTABLISHED: _bindgen_ty_27 = 1;
-pub const BPF_TCP_SYN_SENT: _bindgen_ty_27 = 2;
-pub const BPF_TCP_SYN_RECV: _bindgen_ty_27 = 3;
-pub const BPF_TCP_FIN_WAIT1: _bindgen_ty_27 = 4;
-pub const BPF_TCP_FIN_WAIT2: _bindgen_ty_27 = 5;
-pub const BPF_TCP_TIME_WAIT: _bindgen_ty_27 = 6;
-pub const BPF_TCP_CLOSE: _bindgen_ty_27 = 7;
-pub const BPF_TCP_CLOSE_WAIT: _bindgen_ty_27 = 8;
-pub const BPF_TCP_LAST_ACK: _bindgen_ty_27 = 9;
-pub const BPF_TCP_LISTEN: _bindgen_ty_27 = 10;
-pub const BPF_TCP_CLOSING: _bindgen_ty_27 = 11;
-pub const BPF_TCP_NEW_SYN_RECV: _bindgen_ty_27 = 12;
-pub const BPF_TCP_MAX_STATES: _bindgen_ty_27 = 13;
-pub type _bindgen_ty_27 = ::std::os::raw::c_uint;
-pub const TCP_BPF_IW: _bindgen_ty_28 = 1001;
-pub const TCP_BPF_SNDCWND_CLAMP: _bindgen_ty_28 = 1002;
-pub const TCP_BPF_DELACK_MAX: _bindgen_ty_28 = 1003;
-pub const TCP_BPF_RTO_MIN: _bindgen_ty_28 = 1004;
-pub const TCP_BPF_SYN: _bindgen_ty_28 = 1005;
-pub const TCP_BPF_SYN_IP: _bindgen_ty_28 = 1006;
-pub const TCP_BPF_SYN_MAC: _bindgen_ty_28 = 1007;
-pub type _bindgen_ty_28 = ::std::os::raw::c_uint;
-pub const BPF_LOAD_HDR_OPT_TCP_SYN: _bindgen_ty_29 = 1;
+pub const BPF_SOCK_OPS_RTO_CB_FLAG: _bindgen_ty_29 = 1;
+pub const BPF_SOCK_OPS_RETRANS_CB_FLAG: _bindgen_ty_29 = 2;
+pub const BPF_SOCK_OPS_STATE_CB_FLAG: _bindgen_ty_29 = 4;
+pub const BPF_SOCK_OPS_RTT_CB_FLAG: _bindgen_ty_29 = 8;
+pub const BPF_SOCK_OPS_PARSE_ALL_HDR_OPT_CB_FLAG: _bindgen_ty_29 = 16;
+pub const BPF_SOCK_OPS_PARSE_UNKNOWN_HDR_OPT_CB_FLAG: _bindgen_ty_29 = 32;
+pub const BPF_SOCK_OPS_WRITE_HDR_OPT_CB_FLAG: _bindgen_ty_29 = 64;
+pub const BPF_SOCK_OPS_ALL_CB_FLAGS: _bindgen_ty_29 = 127;
 pub type _bindgen_ty_29 = ::std::os::raw::c_uint;
-pub const BPF_WRITE_HDR_TCP_CURRENT_MSS: _bindgen_ty_30 = 1;
-pub const BPF_WRITE_HDR_TCP_SYNACK_COOKIE: _bindgen_ty_30 = 2;
+pub const BPF_SOCK_OPS_VOID: _bindgen_ty_30 = 0;
+pub const BPF_SOCK_OPS_TIMEOUT_INIT: _bindgen_ty_30 = 1;
+pub const BPF_SOCK_OPS_RWND_INIT: _bindgen_ty_30 = 2;
+pub const BPF_SOCK_OPS_TCP_CONNECT_CB: _bindgen_ty_30 = 3;
+pub const BPF_SOCK_OPS_ACTIVE_ESTABLISHED_CB: _bindgen_ty_30 = 4;
+pub const BPF_SOCK_OPS_PASSIVE_ESTABLISHED_CB: _bindgen_ty_30 = 5;
+pub const BPF_SOCK_OPS_NEEDS_ECN: _bindgen_ty_30 = 6;
+pub const BPF_SOCK_OPS_BASE_RTT: _bindgen_ty_30 = 7;
+pub const BPF_SOCK_OPS_RTO_CB: _bindgen_ty_30 = 8;
+pub const BPF_SOCK_OPS_RETRANS_CB: _bindgen_ty_30 = 9;
+pub const BPF_SOCK_OPS_STATE_CB: _bindgen_ty_30 = 10;
+pub const BPF_SOCK_OPS_TCP_LISTEN_CB: _bindgen_ty_30 = 11;
+pub const BPF_SOCK_OPS_RTT_CB: _bindgen_ty_30 = 12;
+pub const BPF_SOCK_OPS_PARSE_HDR_OPT_CB: _bindgen_ty_30 = 13;
+pub const BPF_SOCK_OPS_HDR_OPT_LEN_CB: _bindgen_ty_30 = 14;
+pub const BPF_SOCK_OPS_WRITE_HDR_OPT_CB: _bindgen_ty_30 = 15;
 pub type _bindgen_ty_30 = ::std::os::raw::c_uint;
+pub const BPF_TCP_ESTABLISHED: _bindgen_ty_31 = 1;
+pub const BPF_TCP_SYN_SENT: _bindgen_ty_31 = 2;
+pub const BPF_TCP_SYN_RECV: _bindgen_ty_31 = 3;
+pub const BPF_TCP_FIN_WAIT1: _bindgen_ty_31 = 4;
+pub const BPF_TCP_FIN_WAIT2: _bindgen_ty_31 = 5;
+pub const BPF_TCP_TIME_WAIT: _bindgen_ty_31 = 6;
+pub const BPF_TCP_CLOSE: _bindgen_ty_31 = 7;
+pub const BPF_TCP_CLOSE_WAIT: _bindgen_ty_31 = 8;
+pub const BPF_TCP_LAST_ACK: _bindgen_ty_31 = 9;
+pub const BPF_TCP_LISTEN: _bindgen_ty_31 = 10;
+pub const BPF_TCP_CLOSING: _bindgen_ty_31 = 11;
+pub const BPF_TCP_NEW_SYN_RECV: _bindgen_ty_31 = 12;
+pub const BPF_TCP_BOUND_INACTIVE: _bindgen_ty_31 = 13;
+pub const BPF_TCP_MAX_STATES: _bindgen_ty_31 = 14;
+pub type _bindgen_ty_31 = ::std::os::raw::c_uint;
+pub const TCP_BPF_IW: _bindgen_ty_32 = 1001;
+pub const TCP_BPF_SNDCWND_CLAMP: _bindgen_ty_32 = 1002;
+pub const TCP_BPF_DELACK_MAX: _bindgen_ty_32 = 1003;
+pub const TCP_BPF_RTO_MIN: _bindgen_ty_32 = 1004;
+pub const TCP_BPF_SYN: _bindgen_ty_32 = 1005;
+pub const TCP_BPF_SYN_IP: _bindgen_ty_32 = 1006;
+pub const TCP_BPF_SYN_MAC: _bindgen_ty_32 = 1007;
+pub type _bindgen_ty_32 = ::std::os::raw::c_uint;
+pub const BPF_LOAD_HDR_OPT_TCP_SYN: _bindgen_ty_33 = 1;
+pub type _bindgen_ty_33 = ::std::os::raw::c_uint;
+pub const BPF_WRITE_HDR_TCP_CURRENT_MSS: _bindgen_ty_34 = 1;
+pub const BPF_WRITE_HDR_TCP_SYNACK_COOKIE: _bindgen_ty_34 = 2;
+pub type _bindgen_ty_34 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct bpf_perf_event_value {
@@ -8611,13 +11398,13 @@ fn bindgen_test_layout_bpf_perf_event_value() {
         )
     );
 }
-pub const BPF_DEVCG_ACC_MKNOD: _bindgen_ty_31 = 1;
-pub const BPF_DEVCG_ACC_READ: _bindgen_ty_31 = 2;
-pub const BPF_DEVCG_ACC_WRITE: _bindgen_ty_31 = 4;
-pub type _bindgen_ty_31 = ::std::os::raw::c_uint;
-pub const BPF_DEVCG_DEV_BLOCK: _bindgen_ty_32 = 1;
-pub const BPF_DEVCG_DEV_CHAR: _bindgen_ty_32 = 2;
-pub type _bindgen_ty_32 = ::std::os::raw::c_uint;
+pub const BPF_DEVCG_ACC_MKNOD: _bindgen_ty_35 = 1;
+pub const BPF_DEVCG_ACC_READ: _bindgen_ty_35 = 2;
+pub const BPF_DEVCG_ACC_WRITE: _bindgen_ty_35 = 4;
+pub type _bindgen_ty_35 = ::std::os::raw::c_uint;
+pub const BPF_DEVCG_DEV_BLOCK: _bindgen_ty_36 = 1;
+pub const BPF_DEVCG_DEV_CHAR: _bindgen_ty_36 = 2;
+pub type _bindgen_ty_36 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct bpf_cgroup_dev_ctx {
@@ -8701,19 +11488,23 @@ fn bindgen_test_layout_bpf_raw_tracepoint_args() {
         )
     );
 }
-pub const BPF_FIB_LOOKUP_DIRECT: _bindgen_ty_33 = 1;
-pub const BPF_FIB_LOOKUP_OUTPUT: _bindgen_ty_33 = 2;
-pub type _bindgen_ty_33 = ::std::os::raw::c_uint;
-pub const BPF_FIB_LKUP_RET_SUCCESS: _bindgen_ty_34 = 0;
-pub const BPF_FIB_LKUP_RET_BLACKHOLE: _bindgen_ty_34 = 1;
-pub const BPF_FIB_LKUP_RET_UNREACHABLE: _bindgen_ty_34 = 2;
-pub const BPF_FIB_LKUP_RET_PROHIBIT: _bindgen_ty_34 = 3;
-pub const BPF_FIB_LKUP_RET_NOT_FWDED: _bindgen_ty_34 = 4;
-pub const BPF_FIB_LKUP_RET_FWD_DISABLED: _bindgen_ty_34 = 5;
-pub const BPF_FIB_LKUP_RET_UNSUPP_LWT: _bindgen_ty_34 = 6;
-pub const BPF_FIB_LKUP_RET_NO_NEIGH: _bindgen_ty_34 = 7;
-pub const BPF_FIB_LKUP_RET_FRAG_NEEDED: _bindgen_ty_34 = 8;
-pub type _bindgen_ty_34 = ::std::os::raw::c_uint;
+pub const BPF_FIB_LOOKUP_DIRECT: _bindgen_ty_37 = 1;
+pub const BPF_FIB_LOOKUP_OUTPUT: _bindgen_ty_37 = 2;
+pub const BPF_FIB_LOOKUP_SKIP_NEIGH: _bindgen_ty_37 = 4;
+pub const BPF_FIB_LOOKUP_TBID: _bindgen_ty_37 = 8;
+pub const BPF_FIB_LOOKUP_SRC: _bindgen_ty_37 = 16;
+pub type _bindgen_ty_37 = ::std::os::raw::c_uint;
+pub const BPF_FIB_LKUP_RET_SUCCESS: _bindgen_ty_38 = 0;
+pub const BPF_FIB_LKUP_RET_BLACKHOLE: _bindgen_ty_38 = 1;
+pub const BPF_FIB_LKUP_RET_UNREACHABLE: _bindgen_ty_38 = 2;
+pub const BPF_FIB_LKUP_RET_PROHIBIT: _bindgen_ty_38 = 3;
+pub const BPF_FIB_LKUP_RET_NOT_FWDED: _bindgen_ty_38 = 4;
+pub const BPF_FIB_LKUP_RET_FWD_DISABLED: _bindgen_ty_38 = 5;
+pub const BPF_FIB_LKUP_RET_UNSUPP_LWT: _bindgen_ty_38 = 6;
+pub const BPF_FIB_LKUP_RET_NO_NEIGH: _bindgen_ty_38 = 7;
+pub const BPF_FIB_LKUP_RET_FRAG_NEEDED: _bindgen_ty_38 = 8;
+pub const BPF_FIB_LKUP_RET_NO_SRC_ADDR: _bindgen_ty_38 = 9;
+pub type _bindgen_ty_38 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct bpf_fib_lookup {
@@ -8726,8 +11517,7 @@ pub struct bpf_fib_lookup {
     pub __bindgen_anon_2: bpf_fib_lookup__bindgen_ty_2,
     pub __bindgen_anon_3: bpf_fib_lookup__bindgen_ty_3,
     pub __bindgen_anon_4: bpf_fib_lookup__bindgen_ty_4,
-    pub h_vlan_proto: __be16,
-    pub h_vlan_TCI: __be16,
+    pub __bindgen_anon_5: bpf_fib_lookup__bindgen_ty_5,
     pub smac: [__u8; 6usize],
     pub dmac: [__u8; 6usize],
 }
@@ -8910,6 +11700,86 @@ fn bindgen_test_layout_bpf_fib_lookup__bindgen_ty_4() {
         )
     );
 }
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union bpf_fib_lookup__bindgen_ty_5 {
+    pub __bindgen_anon_1: bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1,
+    pub tbid: __u32,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1 {
+    pub h_vlan_proto: __be16,
+    pub h_vlan_TCI: __be16,
+}
+#[test]
+fn bindgen_test_layout_bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1>(),
+        2usize,
+        concat!(
+            "Alignment of ",
+            stringify!(bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).h_vlan_proto) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1),
+            "::",
+            stringify!(h_vlan_proto)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).h_vlan_TCI) as usize - ptr as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_5__bindgen_ty_1),
+            "::",
+            stringify!(h_vlan_TCI)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_bpf_fib_lookup__bindgen_ty_5() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_fib_lookup__bindgen_ty_5> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_fib_lookup__bindgen_ty_5>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_fib_lookup__bindgen_ty_5))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_fib_lookup__bindgen_ty_5>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_fib_lookup__bindgen_ty_5))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tbid) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_fib_lookup__bindgen_ty_5),
+            "::",
+            stringify!(tbid)
+        )
+    );
+}
 #[test]
 fn bindgen_test_layout_bpf_fib_lookup() {
     const UNINIT: ::std::mem::MaybeUninit<bpf_fib_lookup> = ::std::mem::MaybeUninit::uninit();
@@ -8972,26 +11842,6 @@ fn bindgen_test_layout_bpf_fib_lookup() {
             stringify!(bpf_fib_lookup),
             "::",
             stringify!(ifindex)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).h_vlan_proto) as usize - ptr as usize },
-        48usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_fib_lookup),
-            "::",
-            stringify!(h_vlan_proto)
-        )
-    );
-    assert_eq!(
-        unsafe { ::std::ptr::addr_of!((*ptr).h_vlan_TCI) as usize - ptr as usize },
-        50usize,
-        concat!(
-            "Offset of field: ",
-            stringify!(bpf_fib_lookup),
-            "::",
-            stringify!(h_vlan_TCI)
         )
     );
     assert_eq!(
@@ -9101,10 +11951,10 @@ pub const bpf_task_fd_type_BPF_FD_TYPE_KRETPROBE: bpf_task_fd_type = 3;
 pub const bpf_task_fd_type_BPF_FD_TYPE_UPROBE: bpf_task_fd_type = 4;
 pub const bpf_task_fd_type_BPF_FD_TYPE_URETPROBE: bpf_task_fd_type = 5;
 pub type bpf_task_fd_type = ::std::os::raw::c_uint;
-pub const BPF_FLOW_DISSECTOR_F_PARSE_1ST_FRAG: _bindgen_ty_35 = 1;
-pub const BPF_FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL: _bindgen_ty_35 = 2;
-pub const BPF_FLOW_DISSECTOR_F_STOP_AT_ENCAP: _bindgen_ty_35 = 4;
-pub type _bindgen_ty_35 = ::std::os::raw::c_uint;
+pub const BPF_FLOW_DISSECTOR_F_PARSE_1ST_FRAG: _bindgen_ty_39 = 1;
+pub const BPF_FLOW_DISSECTOR_F_STOP_AT_FLOW_LABEL: _bindgen_ty_39 = 2;
+pub const BPF_FLOW_DISSECTOR_F_STOP_AT_ENCAP: _bindgen_ty_39 = 4;
+pub type _bindgen_ty_39 = ::std::os::raw::c_uint;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct bpf_flow_keys {
@@ -9507,14 +12357,14 @@ fn bindgen_test_layout_bpf_spin_lock() {
     );
 }
 #[repr(C)]
-#[repr(align(8))]
 #[derive(Debug, Copy, Clone)]
 pub struct bpf_timer {
-    pub _bitfield_align_1: [u8; 0],
-    pub _bitfield_1: __BindgenBitfieldUnit<[u8; 16usize]>,
+    pub __opaque: [__u64; 2usize],
 }
 #[test]
 fn bindgen_test_layout_bpf_timer() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_timer> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_timer>(),
         16usize,
@@ -9525,13 +12375,196 @@ fn bindgen_test_layout_bpf_timer() {
         8usize,
         concat!("Alignment of ", stringify!(bpf_timer))
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_timer),
+            "::",
+            stringify!(__opaque)
+        )
+    );
 }
-impl bpf_timer {
-    #[inline]
-    pub fn new_bitfield_1() -> __BindgenBitfieldUnit<[u8; 16usize]> {
-        let mut __bindgen_bitfield_unit: __BindgenBitfieldUnit<[u8; 16usize]> = Default::default();
-        __bindgen_bitfield_unit
-    }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_dynptr {
+    pub __opaque: [__u64; 2usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_dynptr() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_dynptr> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_dynptr>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_dynptr))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_dynptr>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_dynptr))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_dynptr),
+            "::",
+            stringify!(__opaque)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_list_head {
+    pub __opaque: [__u64; 2usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_list_head() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_list_head> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_list_head>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_list_head))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_list_head>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_list_head))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_list_head),
+            "::",
+            stringify!(__opaque)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_list_node {
+    pub __opaque: [__u64; 3usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_list_node() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_list_node> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_list_node>(),
+        24usize,
+        concat!("Size of: ", stringify!(bpf_list_node))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_list_node>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_list_node))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_list_node),
+            "::",
+            stringify!(__opaque)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_rb_root {
+    pub __opaque: [__u64; 2usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_rb_root() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_rb_root> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_rb_root>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_rb_root))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_rb_root>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_rb_root))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_rb_root),
+            "::",
+            stringify!(__opaque)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_rb_node {
+    pub __opaque: [__u64; 4usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_rb_node() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_rb_node> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_rb_node>(),
+        32usize,
+        concat!("Size of: ", stringify!(bpf_rb_node))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_rb_node>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_rb_node))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_rb_node),
+            "::",
+            stringify!(__opaque)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_refcount {
+    pub __opaque: [__u32; 1usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_refcount() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_refcount> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_refcount>(),
+        4usize,
+        concat!("Size of: ", stringify!(bpf_refcount))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_refcount>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_refcount))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_refcount),
+            "::",
+            stringify!(__opaque)
+        )
+    );
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -9815,6 +12848,7 @@ pub struct bpf_sk_lookup {
     pub local_ip4: __u32,
     pub local_ip6: [__u32; 4usize],
     pub local_port: __u32,
+    pub ingress_ifindex: __u32,
 }
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -9900,7 +12934,7 @@ fn bindgen_test_layout_bpf_sk_lookup() {
     let ptr = UNINIT.as_ptr();
     assert_eq!(
         ::std::mem::size_of::<bpf_sk_lookup>(),
-        64usize,
+        72usize,
         concat!("Size of: ", stringify!(bpf_sk_lookup))
     );
     assert_eq!(
@@ -9988,6 +13022,16 @@ fn bindgen_test_layout_bpf_sk_lookup() {
             stringify!(local_port)
         )
     );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).ingress_ifindex) as usize - ptr as usize },
+        64usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_sk_lookup),
+            "::",
+            stringify!(ingress_ifindex)
+        )
+    );
 }
 impl bpf_sk_lookup {
     #[inline]
@@ -10048,11 +13092,121 @@ fn bindgen_test_layout_btf_ptr() {
         )
     );
 }
-pub const BTF_F_COMPACT: _bindgen_ty_36 = 1;
-pub const BTF_F_NONAME: _bindgen_ty_36 = 2;
-pub const BTF_F_PTR_RAW: _bindgen_ty_36 = 4;
-pub const BTF_F_ZERO: _bindgen_ty_36 = 8;
-pub type _bindgen_ty_36 = ::std::os::raw::c_uint;
+pub const BTF_F_COMPACT: _bindgen_ty_40 = 1;
+pub const BTF_F_NONAME: _bindgen_ty_40 = 2;
+pub const BTF_F_PTR_RAW: _bindgen_ty_40 = 4;
+pub const BTF_F_ZERO: _bindgen_ty_40 = 8;
+pub type _bindgen_ty_40 = ::std::os::raw::c_uint;
+pub const bpf_core_relo_kind_BPF_CORE_FIELD_BYTE_OFFSET: bpf_core_relo_kind = 0;
+pub const bpf_core_relo_kind_BPF_CORE_FIELD_BYTE_SIZE: bpf_core_relo_kind = 1;
+pub const bpf_core_relo_kind_BPF_CORE_FIELD_EXISTS: bpf_core_relo_kind = 2;
+pub const bpf_core_relo_kind_BPF_CORE_FIELD_SIGNED: bpf_core_relo_kind = 3;
+pub const bpf_core_relo_kind_BPF_CORE_FIELD_LSHIFT_U64: bpf_core_relo_kind = 4;
+pub const bpf_core_relo_kind_BPF_CORE_FIELD_RSHIFT_U64: bpf_core_relo_kind = 5;
+pub const bpf_core_relo_kind_BPF_CORE_TYPE_ID_LOCAL: bpf_core_relo_kind = 6;
+pub const bpf_core_relo_kind_BPF_CORE_TYPE_ID_TARGET: bpf_core_relo_kind = 7;
+pub const bpf_core_relo_kind_BPF_CORE_TYPE_EXISTS: bpf_core_relo_kind = 8;
+pub const bpf_core_relo_kind_BPF_CORE_TYPE_SIZE: bpf_core_relo_kind = 9;
+pub const bpf_core_relo_kind_BPF_CORE_ENUMVAL_EXISTS: bpf_core_relo_kind = 10;
+pub const bpf_core_relo_kind_BPF_CORE_ENUMVAL_VALUE: bpf_core_relo_kind = 11;
+pub const bpf_core_relo_kind_BPF_CORE_TYPE_MATCHES: bpf_core_relo_kind = 12;
+pub type bpf_core_relo_kind = ::std::os::raw::c_uint;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_core_relo {
+    pub insn_off: __u32,
+    pub type_id: __u32,
+    pub access_str_off: __u32,
+    pub kind: bpf_core_relo_kind,
+}
+#[test]
+fn bindgen_test_layout_bpf_core_relo() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_core_relo> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_core_relo>(),
+        16usize,
+        concat!("Size of: ", stringify!(bpf_core_relo))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_core_relo>(),
+        4usize,
+        concat!("Alignment of ", stringify!(bpf_core_relo))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).insn_off) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_core_relo),
+            "::",
+            stringify!(insn_off)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).type_id) as usize - ptr as usize },
+        4usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_core_relo),
+            "::",
+            stringify!(type_id)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).access_str_off) as usize - ptr as usize },
+        8usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_core_relo),
+            "::",
+            stringify!(access_str_off)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).kind) as usize - ptr as usize },
+        12usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_core_relo),
+            "::",
+            stringify!(kind)
+        )
+    );
+}
+pub const BPF_F_TIMER_ABS: _bindgen_ty_41 = 1;
+pub const BPF_F_TIMER_CPU_PIN: _bindgen_ty_41 = 2;
+pub type _bindgen_ty_41 = ::std::os::raw::c_uint;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct bpf_iter_num {
+    pub __opaque: [__u64; 1usize],
+}
+#[test]
+fn bindgen_test_layout_bpf_iter_num() {
+    const UNINIT: ::std::mem::MaybeUninit<bpf_iter_num> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<bpf_iter_num>(),
+        8usize,
+        concat!("Size of: ", stringify!(bpf_iter_num))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<bpf_iter_num>(),
+        8usize,
+        concat!("Alignment of ", stringify!(bpf_iter_num))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).__opaque) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(bpf_iter_num),
+            "::",
+            stringify!(__opaque)
+        )
+    );
+}
 pub type int_least8_t = __int_least8_t;
 pub type int_least16_t = __int_least16_t;
 pub type int_least32_t = __int_least32_t;
@@ -11442,6 +14596,12 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
+    pub fn strchrnul(
+        __s: *const ::std::os::raw::c_char,
+        __c: ::std::os::raw::c_int,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
     pub fn strcspn(
         __s: *const ::std::os::raw::c_char,
         __reject: *const ::std::os::raw::c_char,
@@ -11486,6 +14646,34 @@ extern "C" {
     ) -> *mut ::std::os::raw::c_char;
 }
 extern "C" {
+    pub fn strcasestr(
+        __haystack: *const ::std::os::raw::c_char,
+        __needle: *const ::std::os::raw::c_char,
+    ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn memmem(
+        __haystack: *const ::std::os::raw::c_void,
+        __haystacklen: usize,
+        __needle: *const ::std::os::raw::c_void,
+        __needlelen: usize,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn __mempcpy(
+        __dest: *mut ::std::os::raw::c_void,
+        __src: *const ::std::os::raw::c_void,
+        __n: usize,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
+    pub fn mempcpy(
+        __dest: *mut ::std::os::raw::c_void,
+        __src: *const ::std::os::raw::c_void,
+        __n: ::std::os::raw::c_ulong,
+    ) -> *mut ::std::os::raw::c_void;
+}
+extern "C" {
     pub fn strlen(__s: *const ::std::os::raw::c_char) -> ::std::os::raw::c_ulong;
 }
 extern "C" {
@@ -11519,7 +14707,7 @@ extern "C" {
     pub fn bcopy(
         __src: *const ::std::os::raw::c_void,
         __dest: *mut ::std::os::raw::c_void,
-        __n: usize,
+        __n: ::std::os::raw::c_ulong,
     );
 }
 extern "C" {
@@ -11611,6 +14799,20 @@ extern "C" {
         __src: *const ::std::os::raw::c_char,
         __n: ::std::os::raw::c_ulong,
     ) -> *mut ::std::os::raw::c_char;
+}
+extern "C" {
+    pub fn strlcpy(
+        __dest: *mut ::std::os::raw::c_char,
+        __src: *const ::std::os::raw::c_char,
+        __n: ::std::os::raw::c_ulong,
+    ) -> ::std::os::raw::c_ulong;
+}
+extern "C" {
+    pub fn strlcat(
+        __dest: *mut ::std::os::raw::c_char,
+        __src: *const ::std::os::raw::c_char,
+        __n: ::std::os::raw::c_ulong,
+    ) -> ::std::os::raw::c_ulong;
 }
 pub type wchar_t = ::std::os::raw::c_int;
 #[repr(C)]
@@ -17229,6 +20431,7 @@ pub struct xdp_umem_reg {
     pub chunk_size: __u32,
     pub headroom: __u32,
     pub flags: __u32,
+    pub tx_metadata_len: __u32,
 }
 #[test]
 fn bindgen_test_layout_xdp_umem_reg() {
@@ -17292,6 +20495,16 @@ fn bindgen_test_layout_xdp_umem_reg() {
             stringify!(xdp_umem_reg),
             "::",
             stringify!(flags)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tx_metadata_len) as usize - ptr as usize },
+        28usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xdp_umem_reg),
+            "::",
+            stringify!(tx_metadata_len)
         )
     );
 }
@@ -17405,6 +20618,164 @@ fn bindgen_test_layout_xdp_options() {
         concat!(
             "Offset of field: ",
             stringify!(xdp_options),
+            "::",
+            stringify!(flags)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct xsk_tx_metadata {
+    pub flags: __u64,
+    pub __bindgen_anon_1: xsk_tx_metadata__bindgen_ty_1,
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union xsk_tx_metadata__bindgen_ty_1 {
+    pub request: xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1,
+    pub completion: xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2,
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1 {
+    pub csum_start: __u16,
+    pub csum_offset: __u16,
+}
+#[test]
+fn bindgen_test_layout_xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1>(),
+        4usize,
+        concat!(
+            "Size of: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1>(),
+        2usize,
+        concat!(
+            "Alignment of ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).csum_start) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(csum_start)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).csum_offset) as usize - ptr as usize },
+        2usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_1),
+            "::",
+            stringify!(csum_offset)
+        )
+    );
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2 {
+    pub tx_timestamp: __u64,
+}
+#[test]
+fn bindgen_test_layout_xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2() {
+    const UNINIT: ::std::mem::MaybeUninit<xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Size of: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        ::std::mem::align_of::<xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2>(),
+        8usize,
+        concat!(
+            "Alignment of ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).tx_timestamp) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1__bindgen_ty_2),
+            "::",
+            stringify!(tx_timestamp)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_xsk_tx_metadata__bindgen_ty_1() {
+    const UNINIT: ::std::mem::MaybeUninit<xsk_tx_metadata__bindgen_ty_1> =
+        ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<xsk_tx_metadata__bindgen_ty_1>(),
+        8usize,
+        concat!("Size of: ", stringify!(xsk_tx_metadata__bindgen_ty_1))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<xsk_tx_metadata__bindgen_ty_1>(),
+        8usize,
+        concat!("Alignment of ", stringify!(xsk_tx_metadata__bindgen_ty_1))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).request) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1),
+            "::",
+            stringify!(request)
+        )
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).completion) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xsk_tx_metadata__bindgen_ty_1),
+            "::",
+            stringify!(completion)
+        )
+    );
+}
+#[test]
+fn bindgen_test_layout_xsk_tx_metadata() {
+    const UNINIT: ::std::mem::MaybeUninit<xsk_tx_metadata> = ::std::mem::MaybeUninit::uninit();
+    let ptr = UNINIT.as_ptr();
+    assert_eq!(
+        ::std::mem::size_of::<xsk_tx_metadata>(),
+        16usize,
+        concat!("Size of: ", stringify!(xsk_tx_metadata))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<xsk_tx_metadata>(),
+        8usize,
+        concat!("Alignment of ", stringify!(xsk_tx_metadata))
+    );
+    assert_eq!(
+        unsafe { ::std::ptr::addr_of!((*ptr).flags) as usize - ptr as usize },
+        0usize,
+        concat!(
+            "Offset of field: ",
+            stringify!(xsk_tx_metadata),
             "::",
             stringify!(flags)
         )

@@ -6,10 +6,16 @@ description = "Rust bindings for libxdp"
 repository = "https://github.com/chenhengqi/libxdp-sys"
 homepage = "https://github.com/chenhengqi/libxdp-sys"
 keywords = ["libxdp", "xdp"]
-authors = ["Hengqi Chen <hengqi.chen@gmail.com>", "Nathanial Lattimer <d0nut@resync.gg>"]
+authors = [
+    "Hengqi Chen <hengqi.chen@gmail.com>",
+    "Nathanial Lattimer <d0nut@resync.gg>",
+]
 license = "LGPL-2.1 OR BSD-2-Clause"
 build = "build.rs"
 links = "libxdp"
 
 [build-dependencies]
 bindgen = "0.68.1"
+
+[lib]
+doctest = false
