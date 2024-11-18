@@ -21,7 +21,6 @@ fn main() {
 
     println!("cargo:rustc-link-search={}", libbpf_dir.display());
     println!("cargo:rustc-link-search={}", libxdp_dir.display());
-    println!("cargo:rustc-link-lib=static=bpf");
     println!("cargo:rustc-link-lib=static=xdp");
     println!("cargo:rustc-link-lib=elf");
     println!("cargo:rustc-link-lib=z");
