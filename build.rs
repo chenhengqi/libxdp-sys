@@ -17,12 +17,19 @@ fn main() {
         .status()
         .expect("could not execute make");
 
-    assert!(status.success(), "make failed");
+    assert!(status.success(), "make libxdp failed");
 
-    println!("cargo:rustc-link-search={}", libbpf_dir.display());
+    let status = process::Command::new("make")
+        .current_dir(&libbpf_dir)
+        .status()
+        .expect("could not execute make");
+
+    assert!(status.success(), "make libbpf failed");
+
     println!("cargo:rustc-link-search={}", libxdp_dir.display());
-    println!("cargo:rustc-link-lib=static=bpf");
+    println!("cargo:rustc-link-search={}", libbpf_dir.display());
     println!("cargo:rustc-link-lib=static=xdp");
+    println!("cargo:rustc-link-lib=static=bpf");
     println!("cargo:rustc-link-lib=elf");
     println!("cargo:rustc-link-lib=z");
 
@@ -31,6 +38,21 @@ fn main() {
         .generate_inline_functions(true)
         .clang_arg(format!("-I{}", bpf_headers_dir.display()))
         .clang_arg(format!("-I{}", headers_dir.display()))
+        .allowlist_var("BPF_.*")
+        .allowlist_var("LIBBPF.*")
+        .allowlist_var("XDP_.*")
+        .allowlist_var("MAX_DISPATCHER_ACTIONS")
+        .allowlist_var("XSK_.*")
+        .allowlist_var("BTF_.*")
+        .allowlist_function("xdp_.*")
+        .allowlist_function("libxdp_.*")
+        .allowlist_function("xsk_.*")
+        .allowlist_function("btf_.*")
+        .allowlist_function("bpf_.*")
+        .allowlist_type("xsk_.*")
+        .allowlist_type("xdp_.*")
+        .allowlist_type("bpf_.*")
+        .allowlist_type("btf_.*")
         .generate()
         .expect("Unable to generate bindings")
         .write_to_file(src_dir.join("src/bindings.rs"))
