@@ -2,6 +2,12 @@ use std::env;
 use std::path;
 use std::process;
 
+#[cfg(target_arch = "aarch64")]
+const CFLAGS: &str = "-fPIC -pie";
+
+#[cfg(not(target_arch = "aarch64"))]
+const CFLAGS: &str = "";
+
 fn main() {
     let src_dir = path::PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
     let xdptools_dir = src_dir.join("xdp-tools");
@@ -12,6 +18,7 @@ fn main() {
     let bpf_headers_dir = libbpf_dir.join("root/usr/include");
 
     let status = process::Command::new("make")
+        .env("CFLAGS", CFLAGS)
         .arg("libxdp")
         .current_dir(&xdptools_dir)
         .status()
