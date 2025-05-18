@@ -1,8 +1,25 @@
 use std::env;
+use std::fs;
 use std::path;
 use std::process;
 
+// Copies the files in src_dir to dst_dir.
+// Only files are copied, not directories.
+// dst_dir is created if it does not exist.
+fn copy_headers_dir(src_dir: &path::PathBuf, dst_dir: &path::PathBuf) {
+    fs::create_dir_all(&dst_dir).expect("Failed to create destination directory");
+    for entry in fs::read_dir(src_dir).expect("Failed to read source directory") {
+        let entry = entry.unwrap();
+        let path = entry.path();
+        // Skip directories for now
+        if path.is_file() {
+            fs::copy(&path, dst_dir.join(path.file_name().unwrap())).unwrap();
+        }
+    }
+}
+
 fn main() {
+    let dst = path::PathBuf::from(env::var_os("OUT_DIR").unwrap());
     let src_dir = path::PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
     let xdptools_dir = src_dir.join("xdp-tools");
     let libxdp_dir = xdptools_dir.join("lib/libxdp");
@@ -26,6 +43,11 @@ fn main() {
 
     assert!(status.success(), "make libbpf failed");
 
+    // Copy headers to the output directory
+    let dst_header_dir = dst.join("include/xdp");
+    copy_headers_dir(&headers_dir, &dst_header_dir);
+
+    println!("cargo:include={}", dst_header_dir.display());
     println!("cargo:rustc-link-search={}", libxdp_dir.display());
     println!("cargo:rustc-link-search={}", libbpf_dir.display());
     println!("cargo:rustc-link-lib=static=xdp");
