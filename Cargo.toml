@@ -12,4 +12,13 @@ build = "build.rs"
 links = "xdp"
 
 [build-dependencies]
-bindgen = "0.72.0"
+bindgen = "0.70.1"
+cc = "1.0"
+
+[dependencies]
+libbpf-sys = { version = "1.5.1", features = [] }
+
+[features]
+default = []
+vendored = ["libbpf-sys/vendored"]
+vendored-libelf = ["libbpf-sys/vendored-libelf"]
