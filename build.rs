@@ -65,6 +65,9 @@ fn main() {
     // Tell Cargo where to find the libraries
     println!("cargo:rustc-link-search=native={}", obj_out_dir.display());
     println!("cargo:rustc-link-lib=static=xdp");
+    println!("cargo:rustc-link-lib=static=bpf");
+    println!("cargo:rustc-link-lib=elf");
+    println!("cargo:rustc-link-lib=z");
 
     bindgen::Builder::default()
         .header("bindings.h")
@@ -274,16 +277,16 @@ fn compile_bpf_programs(
 
 fn compile_bpf_program(src_file: &PathBuf, flags: &[&str], out_dir: &PathBuf) {
     let base_name = src_file.file_stem().unwrap().to_str().unwrap();
-    let ll_file = out_dir.join("bpf").join(format!("{}.ll", base_name));
-    let obj_file = out_dir.join("bpf").join(format!("{}.o", base_name));
-    let embed_obj_file = out_dir.join(format!("{}.embed.o", base_name));
-    let ll_file_str = ll_file.to_str().unwrap();
-    let obj_file_str = obj_file.to_str().unwrap();
-    let embed_obj_file_str = embed_obj_file.to_str().unwrap();
+    let bpf_dir = out_dir.join("bpf");
+    std::fs::create_dir_all(&bpf_dir).expect("Failed to create bpf directory");
+    let ll_file_str = format!("{}.ll", base_name);
+    let obj_file_str = format!("{}.o", base_name);
+    let embed_obj_file_str = format!("{}.embed.o", base_name);
 
     // Step 1: Compile to LLVM IR with clang
     let clang_cmd = std::env::var("CLANG").unwrap_or_else(|_| "clang".to_string());
     let status = Command::new(clang_cmd)
+        .current_dir(&bpf_dir)
         .args(flags)
         .arg("-o")
         .arg(&ll_file_str)
@@ -299,6 +302,7 @@ fn compile_bpf_program(src_file: &PathBuf, flags: &[&str], out_dir: &PathBuf) {
     // Step 2: Convert to BPF object
     let llc_cmd = find_llc_command();
     let status = Command::new(llc_cmd)
+        .current_dir(&bpf_dir)
         .args(&[
             "-march=bpf",
             "-filetype=obj",
@@ -317,6 +321,7 @@ fn compile_bpf_program(src_file: &PathBuf, flags: &[&str], out_dir: &PathBuf) {
     // Step 3: Create binary embed object
     let ld_cmd = std::env::var("LD").unwrap_or_else(|_| "ld".to_string());
     let status = Command::new(ld_cmd)
+        .current_dir(&bpf_dir)
         .args(&[
             "-r",
             "-b",
@@ -335,10 +340,12 @@ fn compile_bpf_program(src_file: &PathBuf, flags: &[&str], out_dir: &PathBuf) {
     // Step 4: Rename section
     let objcopy_cmd = std::env::var("OBJCOPY").unwrap_or_else(|_| "objcopy".to_string());
     let status = Command::new(objcopy_cmd)
+        .current_dir(&bpf_dir)
         .args(&[
             "--rename-section",
             ".data=.rodata,alloc,load,readonly,data,contents",
             &embed_obj_file_str,
+            out_dir.join(&embed_obj_file_str).to_str().unwrap(),
         ])
         .status()
         .expect("Failed to execute objcopy");
@@ -389,10 +396,11 @@ fn create_libraries(out_dir: &PathBuf) {
         .unwrap()
         .filter_map(Result::ok)
         .filter(|e| e.path().extension().map_or(false, |ext| ext == "o"))
-        .map(|e| e.path())
+        .map(|e| e.file_name())
         .collect::<Vec<_>>();
     let ar_cmd = std::env::var("AR").unwrap_or_else(|_| "ar".to_string());
     let status = Command::new(ar_cmd)
+        .current_dir(out_dir)
         .args(&["rcs", out_dir.join("libxdp.a").to_str().unwrap()])
         .args(obj_files)
         .status()
