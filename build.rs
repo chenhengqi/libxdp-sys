@@ -31,8 +31,9 @@ fn main() {
     let headers_dir = xdptools_dir.join("headers");
     let headers_xdp_dir = headers_dir.join("xdp");
 
-    let libbpf_dir = xdptools_dir.join("lib/libbpf/src");
-    let bpf_headers_dir = libbpf_dir.join("root/usr/include");
+    let bpf_headers_dir = std::env::var_os("DEP_BPF_INCLUDE")
+        .map(PathBuf::from)
+        .expect("Failed to get BPF include directory");
     let out_dir = PathBuf::from(env::var_os("OUT_DIR").unwrap());
     let obj_out_dir = out_dir.join("staticobjs");
     std::fs::create_dir_all(&obj_out_dir).expect("Failed to create output directory");
@@ -241,9 +242,21 @@ fn compile_bpf_programs(
         "-g",
     ];
 
+    // Translate xdp-dispatcher.c.in with m4
+    let m4_cmd = std::env::var("M4").unwrap_or_else(|_| "m4".to_string());
+    let xdp_dispatcher_src = libxdp_dir.join("xdp-dispatcher.c.in");
+    let xdp_dispatcher_dest = out_dir.join("xdp-dispatcher.c");
+    let status = Command::new(m4_cmd)
+        .arg(xdp_dispatcher_src)
+        .arg("-o")
+        .arg(&xdp_dispatcher_dest)
+        .status()
+        .expect("Failed to execute m4");
+    assert!(status.success(), "Failed to preprocess xdp-dispatcher.c.in");
+
     // Compile each BPF program
     compile_bpf_program(
-        &libxdp_dir.join("xdp-dispatcher.c"),
+        &xdp_dispatcher_dest,
         &bpf_common_flags,
         &out_dir,
     );
