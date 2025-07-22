@@ -9,7 +9,7 @@ fn main() {
     let headers_dir = xdptools_dir.join("headers/xdp");
 
     let libbpf_dir = xdptools_dir.join("lib/libbpf/src");
-    let bpf_headers_dir = libbpf_dir.join("root/usr/include");
+    let bpf_headers_dir = libbpf_dir.join("root/include");
 
     let status = process::Command::new("make")
         .arg("libxdp")
@@ -26,12 +26,12 @@ fn main() {
 
     assert!(status.success(), "make libbpf failed");
 
-    println!("cargo:rustc-link-search={}", libxdp_dir.display());
-    println!("cargo:rustc-link-search={}", libbpf_dir.display());
-    println!("cargo:rustc-link-lib=static=xdp");
-    println!("cargo:rustc-link-lib=static=bpf");
-    println!("cargo:rustc-link-lib=elf");
-    println!("cargo:rustc-link-lib=z");
+    println!("cargo::rustc-link-search={}", libxdp_dir.display());
+    println!("cargo::rustc-link-search={}", libbpf_dir.display());
+    println!("cargo::rustc-link-lib=static=xdp");
+    println!("cargo::rustc-link-lib=static=bpf");
+    println!("cargo::rustc-link-lib=elf");
+    println!("cargo::rustc-link-lib=z");
 
     bindgen::Builder::default()
         .header("bindings.h")
