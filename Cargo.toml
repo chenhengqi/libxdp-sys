@@ -21,6 +21,7 @@ cc = "1.2.27"
 libbpf-sys = { version = "=1.5.1", features = [] }
 
 [features]
-default = []
+default = ["use_precompiled_bpf"]
 vendored = ["libbpf-sys/vendored"]
 vendored-libelf = ["libbpf-sys/vendored-libelf"]
+use_precompiled_bpf = []

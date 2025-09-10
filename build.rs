@@ -194,9 +194,91 @@ fn compile_bpf_programs(
     headers_dir: &PathBuf,
     out_dir: &PathBuf,
 ) {
+    let xdp_dispatcher_dest = out_dir.join("xdp-dispatcher.c");
+    #[cfg(not(feature = "use_precompiled_bpf"))]
+    {
+        // Translate xdp-dispatcher.c.in with m4
+        let m4_cmd = std::env::var("M4").unwrap_or_else(|_| "m4".to_string());
+        let xdp_dispatcher_src = libxdp_dir.join("xdp-dispatcher.c.in");
+        let status = Command::new(m4_cmd)
+            .arg(xdp_dispatcher_src)
+            .arg("-o")
+            .arg(&xdp_dispatcher_dest)
+            .status()
+            .expect("Failed to execute m4");
+        assert!(status.success(), "Failed to preprocess xdp-dispatcher.c.in");
+    }
+
+    // Compile each BPF program
+    compile_bpf_program(
+        &xdp_dispatcher_dest,
+        &bpf_headers_dir,
+        &headers_dir,
+        &out_dir,
+    );
+    compile_bpf_program(
+        &libxdp_dir.join("xsk_def_xdp_prog.c"),
+        &bpf_headers_dir,
+        &headers_dir,
+        &out_dir,
+    );
+    compile_bpf_program(
+        &libxdp_dir.join("xsk_def_xdp_prog_5.3.c"),
+        &bpf_headers_dir,
+        &headers_dir,
+        &out_dir,
+    );
+}
+
+#[cfg(feature = "use_precompiled_bpf")]
+fn compile_bpf_program(
+    src_file: &PathBuf,
+    _bpf_headers_dir: &PathBuf,
+    _headers_dir: &PathBuf,
+    out_dir: &PathBuf,
+) {
+    let base_name = src_file.file_stem().unwrap().to_str().unwrap();
+    let bpf_dir = out_dir.join("bpf");
+    std::fs::create_dir_all(&bpf_dir).expect("Failed to create bpf directory");
+    let obj_file_str = format!("{}.o", base_name);
+    let embed_obj_file_str = format!("{}.embed.o", base_name);
+    let src_folder = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("src")
+        .join("prebuilt_ebpf");
+    std::fs::copy(src_folder.join(&obj_file_str), bpf_dir.join(&obj_file_str))
+        .expect("Failed to copy object file");
+    let ld_cmd = std::env::var("LD").unwrap_or_else(|_| "ld".to_string());
+    let target = env::var("TARGET").expect("Could not read TARGET environment variable");
+    let status = Command::new(ld_cmd)
+        .current_dir(&bpf_dir)
+        .args(&[
+            "-A",
+            &target,
+            "-r",
+            "-b",
+            "binary",
+            "-o",
+            &embed_obj_file_str,
+            "-z",
+            "noexecstack",
+            "--format=binary",
+            &obj_file_str,
+        ])
+        .status()
+        .expect("Failed to execute ld");
+    assert!(status.success(), "Failed to create embed object");
+}
+
+#[cfg(not(feature = "use_precompiled_bpf"))]
+fn compile_bpf_program(
+    src_file: &PathBuf,
+    bpf_headers_dir: &PathBuf,
+    headers_dir: &PathBuf,
+    out_dir: &PathBuf,
+) {
     let target_path = get_target_path();
     let target_include = format!("-I/usr/include/{target_path}");
-    let bpf_common_flags = [
+    let flags = [
         "-S",
         "-target",
         "bpf",
@@ -235,46 +317,15 @@ fn compile_bpf_programs(
         "-I",
         headers_dir.to_str().unwrap(),
         "-Wall",
-        "-Wno-unused-value", // This causes some issues in future versions complaining about -c
+        "-Wno-unused-value",
         "-Wno-pointer-sign",
         "-Wno-compare-distinct-pointer-types",
         "-Werror",
         "-O2",
         "-emit-llvm",
+        "-c",
         "-g",
     ];
-
-    // Translate xdp-dispatcher.c.in with m4
-    let m4_cmd = std::env::var("M4").unwrap_or_else(|_| "m4".to_string());
-    let xdp_dispatcher_src = libxdp_dir.join("xdp-dispatcher.c.in");
-    let xdp_dispatcher_dest = out_dir.join("xdp-dispatcher.c");
-    let status = Command::new(m4_cmd)
-        .arg(xdp_dispatcher_src)
-        .arg("-o")
-        .arg(&xdp_dispatcher_dest)
-        .status()
-        .expect("Failed to execute m4");
-    assert!(status.success(), "Failed to preprocess xdp-dispatcher.c.in");
-
-    // Compile each BPF program
-    compile_bpf_program(
-        &xdp_dispatcher_dest,
-        &bpf_common_flags,
-        &out_dir,
-    );
-    compile_bpf_program(
-        &libxdp_dir.join("xsk_def_xdp_prog.c"),
-        &bpf_common_flags,
-        &out_dir,
-    );
-    compile_bpf_program(
-        &libxdp_dir.join("xsk_def_xdp_prog_5.3.c"),
-        &bpf_common_flags,
-        &out_dir,
-    );
-}
-
-fn compile_bpf_program(src_file: &PathBuf, flags: &[&str], out_dir: &PathBuf) {
     let base_name = src_file.file_stem().unwrap().to_str().unwrap();
     let bpf_dir = out_dir.join("bpf");
     std::fs::create_dir_all(&bpf_dir).expect("Failed to create bpf directory");
@@ -351,6 +402,7 @@ fn compile_bpf_program(src_file: &PathBuf, flags: &[&str], out_dir: &PathBuf) {
     assert!(status.success(), "Failed to rename section");
 }
 
+#[cfg(not(feature = "use_precompiled_bpf"))]
 fn find_llc_command() -> String {
     let llc_candidate = std::env::var("LLC").unwrap_or_else(|_| "llc".to_string());
     if Command::new(&llc_candidate)
