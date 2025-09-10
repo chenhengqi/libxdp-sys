@@ -9,7 +9,7 @@ keywords = ["libxdp", "xdp"]
 authors = ["Hengqi Chen <hengqi.chen@gmail.com>", "Nathanial Lattimer <d0nut@resync.gg>"]
 license = "LGPL-2.1 OR BSD-2-Clause"
 build = "build.rs"
-links = "libxdp"
+links = "xdp"
 
 [build-dependencies]
 bindgen = "0.72.0"
