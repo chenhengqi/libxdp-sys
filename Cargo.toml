@@ -24,4 +24,5 @@ libbpf-sys = { version = "=1.5.1", features = [] }
 default = ["use_precompiled_bpf"]
 vendored = ["libbpf-sys/vendored"]
 vendored-libelf = ["libbpf-sys/vendored-libelf"]
+# This uses the *.o ebpf files in src/prebuilt_ebpf instead of compiling from source
 use_precompiled_bpf = []

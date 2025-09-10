@@ -11,6 +11,7 @@ This crate is intended for use as a building block for higher-level Rust librari
 ## Features
 - Bindings to libxdp and related XDP/BPF types and functions
 - Optional vendored build of libbpf via the `vendored` feature
+- By default uses precompiled BPF objects via the `use_precompiled_bpf` feature
 - Compatible with modern Rust editions
 
 ## Usage
@@ -22,11 +23,18 @@ libxdp-sys = "0.2"
 ```
 
 Enable optional features as needed:
+
 ```toml
 [features]
 vendored = ["libbpf-sys/vendored"]
 vendored-libelf = ["libbpf-sys/vendored-libelf"]
+use_precompiled_bpf = [] # Use precompiled BPF objects instead of building at compile time
 ```
+
+### use_precompiled_bpf Feature
+
+If you enable the `use_precompiled_bpf` feature, the crate will use prebuilt BPF object files (found in `src/prebuilt_ebpf`) instead of compiling BPF code during the build process. This can speed up builds and improve reproducibility, especially in CI environments or when cross-compiling.
+
 
 Example usage:
 ```rust
