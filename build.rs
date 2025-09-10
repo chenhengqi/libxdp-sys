@@ -247,26 +247,7 @@ fn compile_bpf_program(
         .join("prebuilt_ebpf");
     std::fs::copy(src_folder.join(&obj_file_str), bpf_dir.join(&obj_file_str))
         .expect("Failed to copy object file");
-    let ld_cmd = std::env::var("LD").unwrap_or_else(|_| "ld".to_string());
-    let target = env::var("TARGET").expect("Could not read TARGET environment variable");
-    let status = Command::new(ld_cmd)
-        .current_dir(&bpf_dir)
-        .args(&[
-            "-A",
-            &target,
-            "-r",
-            "-b",
-            "binary",
-            "-o",
-            &embed_obj_file_str,
-            "-z",
-            "noexecstack",
-            "--format=binary",
-            &obj_file_str,
-        ])
-        .status()
-        .expect("Failed to execute ld");
-    assert!(status.success(), "Failed to create embed object");
+    create_embed_obj(out_dir, bpf_dir, obj_file_str, embed_obj_file_str);
 }
 
 #[cfg(not(feature = "use_precompiled_bpf"))]
@@ -368,6 +349,10 @@ fn compile_bpf_program(
         ll_file_str
     );
 
+    create_embed_obj(out_dir, bpf_dir, obj_file_str, embed_obj_file_str);
+}
+
+fn create_embed_obj(out_dir: &PathBuf, bpf_dir: PathBuf, obj_file_str: String, embed_obj_file_str: String) {
     // Step 3: Create binary embed object
     let ld_cmd = std::env::var("LD").unwrap_or_else(|_| "ld".to_string());
     let status = Command::new(ld_cmd)
