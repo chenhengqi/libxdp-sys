@@ -17,8 +17,8 @@ cc = "1.2.27"
 
 [dependencies]
 # This version is determined by the tag of xdp-tools/lib/libbpf which is currently 1.5.0
-# We pin to an exact version to avoid breaking changes.
-libbpf-sys = { version = "=1.5.0", features = [] }
+# Unfortunately 1.5.0 doesn't export DEP_BPF_INCLUDE, so we use 1.5.1
+libbpf-sys = { version = "=1.5.1", features = [] }
 
 [features]
 default = []
