@@ -26,7 +26,7 @@ fn main() {
     let headers_dir = xdptools_dir.join("headers/xdp");
 
     let libbpf_dir = xdptools_dir.join("lib/libbpf/src");
-    let bpf_headers_dir = libbpf_dir.join("root/usr/include");
+    let bpf_headers_dir = libbpf_dir.join("root/include");
 
     let status = process::Command::new("make")
         .arg("libxdp")
