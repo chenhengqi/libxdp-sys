@@ -235,7 +235,7 @@ fn compile_bpf_programs(
         "-I",
         headers_dir.to_str().unwrap(),
         "-Wall",
-        "-Wno-unused-value",
+        //"-Wno-unused-value", // This causes some issues in future versions complaining about -c
         "-Wno-pointer-sign",
         "-Wno-compare-distinct-pointer-types",
         "-Werror",
