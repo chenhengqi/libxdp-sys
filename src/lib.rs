@@ -4,4 +4,4 @@
 #![allow(clippy::missing_safety_doc)]
 #![allow(clippy::useless_transmute)]
 
-include!("bindings.rs");
+include!(concat!(env!("OUT_DIR"), "/bindings.rs"));

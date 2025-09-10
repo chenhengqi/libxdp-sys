@@ -1,0 +1,5 @@
+{
+    "id": "ctools",
+    "version": "0.1.0",
+    "name": "C Tools required for compiling the library"
+}
