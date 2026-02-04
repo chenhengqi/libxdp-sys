@@ -1,9 +1,11 @@
 // Integration test for libxdp-sys
 // This test checks that the crate can be used and basic symbols are accessible.
 
-
 #[test]
 fn test_libxdp_sys_basic_usage() {
+    use std::ffi::CString;
+
+    use libbpf_sys::XDP_PASS;
     use libxdp_sys::*;
 
     // Use some constants
@@ -73,6 +75,55 @@ fn test_libxdp_sys_basic_usage() {
     let _xsk_ring_cons_comp_addr = xsk_ring_cons__comp_addr;
     let _xsk_ring_cons_rx_desc = xsk_ring_cons__rx_desc;
 
-    // If no such function, just check linkage
-    assert!(true, "libxdp-sys is usable and basic calls work");
+    // Load the dispatcher with an xdp_pass program (best-effort if permissions allow)
+    unsafe {
+        let prog_name = CString::new("xdp_pass").unwrap();
+        let find_filename = CString::new("xdp-dispatcher.o").unwrap();
+
+        let mut prog_opts: xdp_program_opts = std::mem::zeroed();
+        prog_opts.sz = std::mem::size_of::<xdp_program_opts>();
+        prog_opts.prog_name = prog_name.as_ptr();
+        prog_opts.find_filename = find_filename.as_ptr();
+
+        let prog = xdp_program__create(&mut prog_opts);
+        let err = libxdp_get_error(prog as *const _);
+        eprintln!("DEBUG: xdp_program__create returned error: {err}");
+        let assert_dispatcher_error = std::env::var("TEST_DISPATCHER").is_ok();
+        if assert_dispatcher_error {
+            assert_eq!(err, 0, "Expected xdp_program__create to succeed");
+        }
+        if err != 0 {
+            eprintln!(
+                "DEBUG: Skipping test because BPF program creation failed (likely missing CAP_BPF/CAP_SYS_ADMIN)"
+            );
+            return;
+        }
+
+        let in_buf = [0u8; 64];
+        let mut out_buf = [0u8; 64];
+        let mut run_opts: bpf_test_run_opts = std::mem::zeroed();
+        run_opts.sz = std::mem::size_of::<bpf_test_run_opts>();
+        run_opts.data_in = in_buf.as_ptr() as *const _;
+        run_opts.data_out = out_buf.as_mut_ptr() as *mut _;
+        run_opts.data_size_in = in_buf.len() as u32;
+        run_opts.data_size_out = out_buf.len() as u32;
+        run_opts.repeat = 1;
+
+        let ret = xdp_program__test_run(prog, &mut run_opts, 0);
+        eprintln!("DEBUG: xdp_program__test_run returned: {ret}");
+        xdp_program__close(prog);
+        if assert_dispatcher_error {
+            assert_eq!(ret, 0, "Expected xdp_program__test_run to succeed");
+        }
+        if ret != 0 {
+            eprintln!(
+                "DEBUG: Test run failed with errno {ret}, skipping (likely missing CAP_BPF/CAP_SYS_ADMIN)"
+            );
+            match ret {
+                -1 | -13 | -38 | -95 => return, // EPERM/EACCES/ENOSYS/EOPNOTSUPP
+                _ => panic!("xdp_program__test_run failed: {ret}"),
+            }
+        }
+        assert_eq!(run_opts.retval, XDP_PASS);
+    }
 }

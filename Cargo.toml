@@ -1,6 +1,6 @@
 [package]
 name = "libxdp-sys"
-version = "0.2.3+1.5.6"
+version = "0.2.4+1.6.0"
 edition = "2024"
 description = "Rust bindings for libxdp"
 repository = "https://github.com/chenhengqi/libxdp-sys"
@@ -21,8 +21,9 @@ cc = "1.2.27"
 libbpf-sys = { version = "=1.5.1", features = [] }
 
 [features]
-default = ["use_precompiled_bpf"]
+default = []
 vendored = ["libbpf-sys/vendored"]
 vendored-libelf = ["libbpf-sys/vendored-libelf"]
 # This uses the *.o ebpf files in src/prebuilt_ebpf instead of compiling from source
 use_precompiled_bpf = []
+use_cc_build = []

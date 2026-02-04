@@ -3,7 +3,7 @@
 {
 	"name": "Rust",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/rust:1-1-bookworm",
+	"image": "mcr.microsoft.com/devcontainers/rust:2-1-trixie",
 
 	// Use 'mounts' to make the cargo cache persistent in a Docker Volume.
 	// "mounts": [
@@ -16,8 +16,10 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-		"./ctools": {}
-	}
+		"./ctools": {},
+		"ghcr.io/lee-orr/rusty-dev-containers/cargo-make:0.1": {}
+	},
+	"capAdd": ["CAP_BPF", "CAP_SYS_ADMIN"]
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],

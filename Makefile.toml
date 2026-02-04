@@ -1,0 +1,48 @@
+[config]
+default_to_workspace = false
+
+[env]
+# Set this to fail tests instead of skipping on missing permissions
+TEST_DISPATCHER = { value = "", condition = { env_not_set = ["TEST_DISPATCHER"] } }
+CARGO_EXECUTABLE = { script =   ["which cargo"] }
+
+# Task to test with no features (default)
+[tasks.test-default]
+command = "sudo"
+args = ["-E", "${CARGO_EXECUTABLE}", "test"]
+
+# Task to test with vendored feature
+[tasks.test-vendored]
+command = "sudo"
+args = ["-E", "${CARGO_EXECUTABLE}", "test", "--features", "vendored"]
+
+# Task to test with vendored-libelf feature
+[tasks.test-vendored-libelf]
+command = "sudo"
+args = ["-E", "${CARGO_EXECUTABLE}", "test", "--features", "vendored-libelf"]
+
+# Task to test with use_precompiled_bpf feature
+[tasks.test-use-precompiled-bpf]
+command = "sudo"
+args = ["-E", "${CARGO_EXECUTABLE}", "test", "--features", "use_precompiled_bpf"]
+
+# Task to test with use_cc_build feature
+[tasks.test-use-cc-build]
+command = "sudo"
+args = ["-E", "${CARGO_EXECUTABLE}", "test", "--features", "use_cc_build"]
+
+# Task to test with all features
+[tasks.test-all-features]
+command = "sudo"
+args = ["-E", "${CARGO_EXECUTABLE}", "test", "--all-features"]
+
+# Main test task that runs all feature combinations
+[tasks.test-all]
+dependencies = [
+    "test-default",
+    "test-vendored",
+    "test-vendored-libelf",
+    "test-use-precompiled-bpf",
+    "test-use-cc-build",
+    "test-all-features"
+]
