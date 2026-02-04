@@ -230,13 +230,16 @@ fn compile_bpf_programs(
         // Translate xdp-dispatcher.c.in with m4
         let m4_cmd = std::env::var("M4").unwrap_or_else(|_| "m4".to_string());
         let xdp_dispatcher_src = libxdp_dir.join("xdp-dispatcher.c.in");
-        let status = Command::new(m4_cmd)
-            .arg(xdp_dispatcher_src)
-            .arg("-o")
-            .arg(&xdp_dispatcher_dest)
-            .status()
+        let output = Command::new(m4_cmd)
+            .arg(&xdp_dispatcher_src)
+            .output()
             .expect("Failed to execute m4");
-        assert!(status.success(), "Failed to preprocess xdp-dispatcher.c.in");
+        assert!(
+            output.status.success(),
+            "Failed to preprocess xdp-dispatcher.c.in"
+        );
+        std::fs::write(&xdp_dispatcher_dest, output.stdout)
+            .expect("Failed to write xdp-dispatcher.c");
     }
 
     // Compile each BPF program
@@ -286,7 +289,6 @@ fn compile_bpf_program(
     let target_path = get_target_path();
     let target_include = format!("-I/usr/include/{target_path}");
     let flags = [
-        "-S",
         "-target",
         "bpf",
         "-D",
@@ -329,49 +331,29 @@ fn compile_bpf_program(
         "-Wno-compare-distinct-pointer-types",
         "-Werror",
         "-O2",
-        "-emit-llvm",
         "-c",
         "-g",
     ];
     let base_name = src_file.file_stem().unwrap().to_str().unwrap();
     let bpf_dir = out_dir.join("bpf");
     std::fs::create_dir_all(&bpf_dir).expect("Failed to create bpf directory");
-    let ll_file_str = format!("{base_name}.ll");
     let obj_file_str = format!("{base_name}.o");
     let embed_obj_file_str = format!("{base_name}.embed.o");
 
-    // Step 1: Compile to LLVM IR with clang
+    // Compile directly to BPF object with clang (matching Makefile approach)
     let clang_cmd = std::env::var("CLANG").unwrap_or_else(|_| "clang".to_string());
     let status = Command::new(clang_cmd)
         .current_dir(&bpf_dir)
         .args(flags)
         .arg("-o")
-        .arg(&ll_file_str)
+        .arg(&obj_file_str)
         .arg(src_file)
         .status()
         .expect("Failed to execute clang");
     assert!(
         status.success(),
-        "Failed to compile {} to LLVM IR",
+        "Failed to compile {} to BPF object",
         src_file.to_str().unwrap()
-    );
-
-    // Step 2: Convert to BPF object
-    let llc_cmd = find_llc_command();
-    let status = Command::new(llc_cmd)
-        .current_dir(&bpf_dir)
-        .args([
-            "-march=bpf",
-            "-filetype=obj",
-            "-o",
-            &obj_file_str,
-            &ll_file_str,
-        ])
-        .status()
-        .expect("Failed to execute llc");
-    assert!(
-        status.success(),
-        "Failed to convert {ll_file_str} to object"
     );
 
     create_embed_obj(out_dir, &bpf_dir, &obj_file_str, &embed_obj_file_str);
@@ -410,42 +392,6 @@ fn create_embed_obj(out_dir: &Path, bpf_dir: &Path, obj_file_str: &str, embed_ob
         .status()
         .expect("Failed to execute objcopy");
     assert!(status.success(), "Failed to rename section");
-}
-
-#[cfg(feature = "use_cc_build")]
-fn find_llc_command() -> String {
-    let llc_candidate = std::env::var("LLC").unwrap_or_else(|_| "llc".to_string());
-    if Command::new(&llc_candidate)
-        .arg("--version")
-        .output()
-        .is_ok()
-    {
-        return llc_candidate;
-    }
-    let clang_name = std::env::var("CLANG").unwrap_or_else(|_| "clang".to_string());
-    let clang_path = PathBuf::from(clang_name);
-    let clang_name = clang_path.file_name().unwrap().to_str().unwrap();
-    let paths = env::var("PATH").unwrap_or_default();
-    for path in env::split_paths(&paths) {
-        let llc_path = path.join(&llc_candidate);
-        if llc_path.exists() && llc_path.is_file() {
-            return llc_path.to_str().unwrap().to_string();
-        }
-        let clang_path = path.join(clang_name);
-        if clang_path.exists() && clang_path.is_file() {
-            // Read link and get parent directory
-            if let Ok(link_target) = clang_path.canonicalize() {
-                if let Some(parent) = link_target.parent() {
-                    for entry in std::fs::read_dir(parent).unwrap().flatten() {
-                        if entry.file_name().to_str().unwrap().starts_with("llc") {
-                            return entry.path().to_str().unwrap().to_string();
-                        }
-                    }
-                }
-            }
-        }
-    }
-    panic!("Could not find llc command in PATH");
 }
 
 #[cfg(feature = "use_cc_build")]
