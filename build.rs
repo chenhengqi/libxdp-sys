@@ -1,15 +1,16 @@
+#[cfg(feature = "use_cc_build")]
 use cc::Build;
 use std::env;
 use std::fs;
-use std::path;
+use std::path::Path;
 use std::path::PathBuf;
 use std::process::Command;
 
 // Copies the files in src_dir to dst_dir.
 // Only files are copied, not directories.
 // dst_dir is created if it does not exist.
-fn copy_headers_dir(src_dir: &path::PathBuf, dst_dir: &path::PathBuf) {
-    fs::create_dir_all(&dst_dir).expect("Failed to create destination directory");
+fn copy_headers_dir(src_dir: &Path, dst_dir: &Path) {
+    fs::create_dir_all(dst_dir).expect("Failed to create destination directory");
     for entry in fs::read_dir(src_dir).expect("Failed to read source directory") {
         let entry = entry.unwrap();
         let path = entry.path();
@@ -21,8 +22,8 @@ fn copy_headers_dir(src_dir: &path::PathBuf, dst_dir: &path::PathBuf) {
 }
 
 fn main() {
-    let dst = path::PathBuf::from(env::var_os("OUT_DIR").unwrap());
-    let src_dir = path::PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
+    let dst = PathBuf::from(env::var_os("OUT_DIR").unwrap());
+    let src_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
     let xdptools_dir = src_dir.join("xdp-tools");
     let libxdp_dir = xdptools_dir.join("lib/libxdp");
     let libxdp_dir_str = libxdp_dir
@@ -48,14 +49,13 @@ fn main() {
     println!("cargo:rerun-if-changed={libxdp_dir_str}/libxdp.map");
     println!("cargo:rerun-if-changed=build.rs");
 
-    // Compile C sources
-    compile_c_sources(&libxdp_dir, &bpf_headers_dir, &headers_dir, &obj_out_dir);
-
-    // Compile BPF programs
-    compile_bpf_programs(&libxdp_dir, &bpf_headers_dir, &headers_dir, &obj_out_dir);
-
-    // Create libraries
-    create_libraries(&obj_out_dir);
+    compile_libxdp(
+        &xdptools_dir,
+        &libxdp_dir,
+        &headers_dir,
+        &bpf_headers_dir,
+        &obj_out_dir,
+    );
 
     // Copy headers to the output directory
     let dst_header_dir = dst.join("include/xdp");
@@ -95,12 +95,46 @@ fn main() {
         .expect("Couldn't write bindings");
 }
 
-fn compile_c_sources(
-    libxdp_dir: &PathBuf,
-    bpf_header: &PathBuf,
-    headers_dir: &PathBuf,
-    out_dir: &PathBuf,
+#[cfg(feature = "use_cc_build")]
+fn compile_libxdp(
+    _xdptools_dir: &Path,
+    libxdp_dir: &Path,
+    headers_dir: &Path,
+    bpf_headers_dir: &Path,
+    obj_out_dir: &Path,
 ) {
+    // Compile C sources
+    compile_c_sources(libxdp_dir, bpf_headers_dir, headers_dir, obj_out_dir);
+
+    // Compile BPF programs
+    compile_bpf_programs(libxdp_dir, bpf_headers_dir, headers_dir, obj_out_dir);
+
+    // Create libraries
+    create_libraries(obj_out_dir);
+}
+
+#[cfg(not(feature = "use_cc_build"))]
+fn compile_libxdp(
+    xdptools_dir: &Path,
+    libxdp_dir: &Path,
+    _headers_dir: &Path,
+    _bpf_headers_dir: &Path,
+    obj_out_dir: &Path,
+) {
+    let status = Command::new("make")
+        .arg("libxdp")
+        .current_dir(xdptools_dir)
+        .status()
+        .expect("could not execute make");
+
+    assert!(status.success(), "make libxdp failed");
+    // Copy the built library to the obj_out_dir directory
+    fs::copy(libxdp_dir.join("libxdp.a"), obj_out_dir.join("libxdp.a"))
+        .expect("Failed to copy libxdp.a");
+}
+
+#[cfg(feature = "use_cc_build")]
+fn compile_c_sources(libxdp_dir: &Path, bpf_header: &Path, headers_dir: &Path, out_dir: &Path) {
     // Static builds
     let mut static_build = Build::new();
     configure_build(&mut static_build, true, bpf_header, headers_dir);
@@ -111,12 +145,8 @@ fn compile_c_sources(
         .compile("xdp_static");
 }
 
-fn configure_build(
-    build: &mut Build,
-    is_static: bool,
-    bpf_header: &PathBuf,
-    headers_dir: &PathBuf,
-) {
+#[cfg(feature = "use_cc_build")]
+fn configure_build(build: &mut Build, is_static: bool, bpf_header: &Path, headers_dir: &Path) {
     let target_path = get_target_path();
     build
         .opt_level(2)
@@ -166,13 +196,12 @@ fn configure_build(
     }
 }
 
+#[cfg(feature = "use_cc_build")]
 fn get_target_path() -> String {
     let target = env::var("TARGET").expect("Could not read TARGET environment variable");
     if target.starts_with("aarch64") {
         return "aarch64-linux-gnu".to_string();
-    } else if target == "arm-unknown-linux-gnueabihf" {
-        return "arm-linux-gnueabihf".to_string();
-    } else if target == "armv7-unknown-linux-gnueabihf" {
+    } else if target == "arm-unknown-linux-gnueabihf" || target == "armv7-unknown-linux-gnueabihf" {
         return "arm-linux-gnueabihf".to_string();
     } else if target.starts_with("x86_64") {
         return "x86_64-linux-gnu".to_string();
@@ -185,14 +214,15 @@ fn get_target_path() -> String {
     } else if target.starts_with("s390x") {
         return "s390x-linux-gnu".to_string();
     }
-    panic!("Unsupported target: {}", target);
+    panic!("Unsupported target: {target}");
 }
 
+#[cfg(feature = "use_cc_build")]
 fn compile_bpf_programs(
-    libxdp_dir: &PathBuf,
-    bpf_headers_dir: &PathBuf,
-    headers_dir: &PathBuf,
-    out_dir: &PathBuf,
+    libxdp_dir: &Path,
+    bpf_headers_dir: &Path,
+    headers_dir: &Path,
+    out_dir: &Path,
 ) {
     let xdp_dispatcher_dest = out_dir.join("xdp-dispatcher.c");
     #[cfg(not(feature = "use_precompiled_bpf"))]
@@ -210,52 +240,48 @@ fn compile_bpf_programs(
     }
 
     // Compile each BPF program
-    compile_bpf_program(
-        &xdp_dispatcher_dest,
-        &bpf_headers_dir,
-        &headers_dir,
-        &out_dir,
-    );
+    compile_bpf_program(&xdp_dispatcher_dest, bpf_headers_dir, headers_dir, out_dir);
     compile_bpf_program(
         &libxdp_dir.join("xsk_def_xdp_prog.c"),
-        &bpf_headers_dir,
-        &headers_dir,
-        &out_dir,
+        bpf_headers_dir,
+        headers_dir,
+        out_dir,
     );
     compile_bpf_program(
         &libxdp_dir.join("xsk_def_xdp_prog_5.3.c"),
-        &bpf_headers_dir,
-        &headers_dir,
-        &out_dir,
+        bpf_headers_dir,
+        headers_dir,
+        out_dir,
     );
 }
 
-#[cfg(feature = "use_precompiled_bpf")]
+#[cfg(not(feature = "use_precompiled_bpf"))]
+#[cfg(not(feature = "use_cc_build"))]
 fn compile_bpf_program(
-    src_file: &PathBuf,
-    _bpf_headers_dir: &PathBuf,
-    _headers_dir: &PathBuf,
-    out_dir: &PathBuf,
+    src_file: &Path,
+    _bpf_headers_dir: &Path,
+    _headers_dir: &Path,
+    out_dir: &Path,
 ) {
     let base_name = src_file.file_stem().unwrap().to_str().unwrap();
     let bpf_dir = out_dir.join("bpf");
     std::fs::create_dir_all(&bpf_dir).expect("Failed to create bpf directory");
-    let obj_file_str = format!("{}.o", base_name);
-    let embed_obj_file_str = format!("{}.embed.o", base_name);
+    let obj_file_str = format!("{base_name}.o");
+    let embed_obj_file_str = format!("{base_name}.embed.o");
     let src_folder = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
         .join("src")
         .join("prebuilt_ebpf");
     std::fs::copy(src_folder.join(&obj_file_str), bpf_dir.join(&obj_file_str))
         .expect("Failed to copy object file");
-    create_embed_obj(out_dir, bpf_dir, obj_file_str, embed_obj_file_str);
+    create_embed_obj(out_dir, &bpf_dir, &obj_file_str, &embed_obj_file_str);
 }
 
-#[cfg(not(feature = "use_precompiled_bpf"))]
+#[cfg(feature = "use_cc_build")]
 fn compile_bpf_program(
-    src_file: &PathBuf,
-    bpf_headers_dir: &PathBuf,
-    headers_dir: &PathBuf,
-    out_dir: &PathBuf,
+    src_file: &Path,
+    bpf_headers_dir: &Path,
+    headers_dir: &Path,
+    out_dir: &Path,
 ) {
     let target_path = get_target_path();
     let target_include = format!("-I/usr/include/{target_path}");
@@ -310,9 +336,9 @@ fn compile_bpf_program(
     let base_name = src_file.file_stem().unwrap().to_str().unwrap();
     let bpf_dir = out_dir.join("bpf");
     std::fs::create_dir_all(&bpf_dir).expect("Failed to create bpf directory");
-    let ll_file_str = format!("{}.ll", base_name);
-    let obj_file_str = format!("{}.o", base_name);
-    let embed_obj_file_str = format!("{}.embed.o", base_name);
+    let ll_file_str = format!("{base_name}.ll");
+    let obj_file_str = format!("{base_name}.o");
+    let embed_obj_file_str = format!("{base_name}.embed.o");
 
     // Step 1: Compile to LLVM IR with clang
     let clang_cmd = std::env::var("CLANG").unwrap_or_else(|_| "clang".to_string());
@@ -334,7 +360,7 @@ fn compile_bpf_program(
     let llc_cmd = find_llc_command();
     let status = Command::new(llc_cmd)
         .current_dir(&bpf_dir)
-        .args(&[
+        .args([
             "-march=bpf",
             "-filetype=obj",
             "-o",
@@ -345,28 +371,27 @@ fn compile_bpf_program(
         .expect("Failed to execute llc");
     assert!(
         status.success(),
-        "Failed to convert {} to object",
-        ll_file_str
+        "Failed to convert {ll_file_str} to object"
     );
 
-    create_embed_obj(out_dir, bpf_dir, obj_file_str, embed_obj_file_str);
+    create_embed_obj(out_dir, &bpf_dir, &obj_file_str, &embed_obj_file_str);
 }
 
-fn create_embed_obj(out_dir: &PathBuf, bpf_dir: PathBuf, obj_file_str: String, embed_obj_file_str: String) {
+fn create_embed_obj(out_dir: &Path, bpf_dir: &Path, obj_file_str: &str, embed_obj_file_str: &str) {
     // Step 3: Create binary embed object
     let ld_cmd = std::env::var("LD").unwrap_or_else(|_| "ld".to_string());
     let status = Command::new(ld_cmd)
-        .current_dir(&bpf_dir)
-        .args(&[
+        .current_dir(bpf_dir)
+        .args([
             "-r",
             "-b",
             "binary",
             "-o",
-            &embed_obj_file_str,
+            embed_obj_file_str,
             "-z",
             "noexecstack",
             "--format=binary",
-            &obj_file_str,
+            obj_file_str,
         ])
         .status()
         .expect("Failed to execute ld");
@@ -375,19 +400,19 @@ fn create_embed_obj(out_dir: &PathBuf, bpf_dir: PathBuf, obj_file_str: String, e
     // Step 4: Rename section
     let objcopy_cmd = std::env::var("OBJCOPY").unwrap_or_else(|_| "objcopy".to_string());
     let status = Command::new(objcopy_cmd)
-        .current_dir(&bpf_dir)
-        .args(&[
+        .current_dir(bpf_dir)
+        .args([
             "--rename-section",
             ".data=.rodata,alloc,load,readonly,data,contents",
-            &embed_obj_file_str,
-            out_dir.join(&embed_obj_file_str).to_str().unwrap(),
+            embed_obj_file_str,
+            out_dir.join(embed_obj_file_str).to_str().unwrap(),
         ])
         .status()
         .expect("Failed to execute objcopy");
     assert!(status.success(), "Failed to rename section");
 }
 
-#[cfg(not(feature = "use_precompiled_bpf"))]
+#[cfg(feature = "use_cc_build")]
 fn find_llc_command() -> String {
     let llc_candidate = std::env::var("LLC").unwrap_or_else(|_| "llc".to_string());
     if Command::new(&llc_candidate)
@@ -411,11 +436,9 @@ fn find_llc_command() -> String {
             // Read link and get parent directory
             if let Ok(link_target) = clang_path.canonicalize() {
                 if let Some(parent) = link_target.parent() {
-                    for entry in std::fs::read_dir(parent).unwrap() {
-                        if let Ok(entry) = entry {
-                            if entry.file_name().to_str().unwrap().starts_with("llc") {
-                                return entry.path().to_str().unwrap().to_string();
-                            }
+                    for entry in std::fs::read_dir(parent).unwrap().flatten() {
+                        if entry.file_name().to_str().unwrap().starts_with("llc") {
+                            return entry.path().to_str().unwrap().to_string();
                         }
                     }
                 }
@@ -425,19 +448,20 @@ fn find_llc_command() -> String {
     panic!("Could not find llc command in PATH");
 }
 
-fn create_libraries(out_dir: &PathBuf) {
+#[cfg(feature = "use_cc_build")]
+fn create_libraries(out_dir: &Path) {
     // Create static library
     let obj_files = out_dir
         .read_dir()
         .unwrap()
         .filter_map(Result::ok)
-        .filter(|e| e.path().extension().map_or(false, |ext| ext == "o"))
+        .filter(|e| e.path().extension().is_some_and(|ext| ext == "o"))
         .map(|e| e.file_name())
         .collect::<Vec<_>>();
     let ar_cmd = std::env::var("AR").unwrap_or_else(|_| "ar".to_string());
     let status = Command::new(ar_cmd)
         .current_dir(out_dir)
-        .args(&["rcs", out_dir.join("libxdp.a").to_str().unwrap()])
+        .args(["rcs", out_dir.join("libxdp.a").to_str().unwrap()])
         .args(obj_files)
         .status()
         .expect("Failed to execute ar");
