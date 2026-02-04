@@ -3,9 +3,10 @@
 
 #[test]
 fn test_libxdp_sys_basic_usage() {
+    use std::ffi::CString;
+
     use libbpf_sys::XDP_PASS;
     use libxdp_sys::*;
-    use std::ffi::CString;
 
     // Use some constants
     let _headroom = XDP_PACKET_HEADROOM;
@@ -87,6 +88,10 @@ fn test_libxdp_sys_basic_usage() {
         let prog = xdp_program__create(&mut prog_opts);
         let err = libxdp_get_error(prog as *const _);
         eprintln!("DEBUG: xdp_program__create returned error: {err}");
+        let assert_dispatcher_error = std::env::var("TEST_DISPATCHER").is_ok();
+        if assert_dispatcher_error {
+            assert_eq!(err, 0, "Expected xdp_program__create to succeed");
+        }
         if err != 0 {
             eprintln!(
                 "DEBUG: Skipping test because BPF program creation failed (likely missing CAP_BPF/CAP_SYS_ADMIN)"
@@ -106,8 +111,11 @@ fn test_libxdp_sys_basic_usage() {
 
         let ret = xdp_program__test_run(prog, &mut run_opts, 0);
         eprintln!("DEBUG: xdp_program__test_run returned: {ret}");
+        xdp_program__close(prog);
+        if assert_dispatcher_error {
+            assert_eq!(ret, 0, "Expected xdp_program__test_run to succeed");
+        }
         if ret != 0 {
-            xdp_program__close(prog);
             eprintln!(
                 "DEBUG: Test run failed with errno {ret}, skipping (likely missing CAP_BPF/CAP_SYS_ADMIN)"
             );
@@ -116,8 +124,6 @@ fn test_libxdp_sys_basic_usage() {
                 _ => panic!("xdp_program__test_run failed: {ret}"),
             }
         }
-
         assert_eq!(run_opts.retval, XDP_PASS);
-        xdp_program__close(prog);
     }
 }

@@ -1,10 +1,9 @@
+use std::path::{Path, PathBuf};
+use std::process::Command;
+use std::{env, fs};
+
 #[cfg(feature = "use_cc_build")]
 use cc::Build;
-use std::env;
-use std::fs;
-use std::path::Path;
-use std::path::PathBuf;
-use std::process::Command;
 
 // Copies the files in src_dir to dst_dir.
 // Only files are copied, not directories.
@@ -217,7 +216,7 @@ fn get_target_path() -> String {
     panic!("Unsupported target: {target}");
 }
 
-#[cfg(feature = "use_cc_build")]
+#[cfg(any(feature = "use_cc_build", feature = "use_precompiled_bpf"))]
 fn compile_bpf_programs(
     libxdp_dir: &Path,
     bpf_headers_dir: &Path,
@@ -225,7 +224,7 @@ fn compile_bpf_programs(
     out_dir: &Path,
 ) {
     let xdp_dispatcher_dest = out_dir.join("xdp-dispatcher.c");
-    #[cfg(not(feature = "use_precompiled_bpf"))]
+    #[cfg(feature = "use_cc_build")]
     {
         // Translate xdp-dispatcher.c.in with m4
         let m4_cmd = std::env::var("M4").unwrap_or_else(|_| "m4".to_string());
@@ -258,7 +257,7 @@ fn compile_bpf_programs(
     );
 }
 
-#[cfg(not(feature = "use_precompiled_bpf"))]
+#[cfg(feature = "use_precompiled_bpf")]
 #[cfg(not(feature = "use_cc_build"))]
 fn compile_bpf_program(
     src_file: &Path,
