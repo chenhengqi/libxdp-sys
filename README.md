@@ -1,3 +1,5 @@
+
+
 # libxdp-sys
 
 Rust FFI bindings for the [libxdp](https://github.com/xdp-project/xdp-tools/tree/main/lib/libxdp) C library, enabling safe and efficient interaction with XDP (eXpress Data Path) features from Rust.
@@ -11,7 +13,7 @@ This crate is intended for use as a building block for higher-level Rust librari
 ## Features
 - Bindings to libxdp and related XDP/BPF types and functions
 - Optional vendored build of libbpf via the `vendored` feature
-- By default uses precompiled BPF objects via the `use_precompiled_bpf` feature
+- Optionally uses precompiled BPF objects via the `use_precompiled_bpf` feature
 - Compatible with modern Rust editions
 
 ## Usage
@@ -74,4 +76,3 @@ cargo test
 - Hengqi Chen <hengqi.chen@gmail.com>
 - Nathanial Lattimer <d0nut@resync.gg>
 - Karsten Becker <skipper.pasty.0a@icloud.com>
-
